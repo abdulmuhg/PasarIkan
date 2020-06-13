@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PasarIkan</string>
+    <string name="desc_image_item">Image Item</string>
+    <string name="prompt_user_profile_icon">User Profile Icon</string>
 </resources>
