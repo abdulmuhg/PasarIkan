@@ -12,12 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_round_arrow_back_24_white">
+            app:contentInsetStartWithNavigation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,17 +34,18 @@
                     app:searchIcon="@drawable/ic_round_search_24_white" />
 
                 <ImageButton
+                    android:id="@+id/btn_about"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="?android:attr/selectableItemBackground"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_round_account_circle_30dp"
                     android:contentDescription="@string/prompt_user_profile_icon" />
 
             </LinearLayout>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

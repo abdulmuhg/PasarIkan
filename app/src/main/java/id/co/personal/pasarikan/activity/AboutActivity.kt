@@ -16,5 +16,9 @@ class AboutActivity : AppCompatActivity() {
             .load(R.drawable.user_profile)
             .apply(RequestOptions.circleCropTransform())
             .into(iv_profile)
+
+        toolbar_about.setNavigationOnClickListener {
+            finish()
+        }
     }
 }

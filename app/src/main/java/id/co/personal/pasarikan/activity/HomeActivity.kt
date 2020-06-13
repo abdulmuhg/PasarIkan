@@ -1,5 +1,6 @@
 package id.co.personal.pasarikan.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,10 +14,12 @@ class HomeActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         val fish = Fish().getListData()
+        listFishItem = ArrayList()
+        listFishItem.clear()
         listFishItem.addAll(fish!!)
         showRecyclerList()
+        setOnClickButton()
     }
 
     private fun showRecyclerList(){
@@ -29,4 +32,9 @@ class HomeActivity : AppCompatActivity(){
         rv_fish_item.adapter = adapter
     }
 
+    private fun setOnClickButton(){
+        btn_about.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+    }
 }
