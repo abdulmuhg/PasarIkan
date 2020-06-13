@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".activity.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp"

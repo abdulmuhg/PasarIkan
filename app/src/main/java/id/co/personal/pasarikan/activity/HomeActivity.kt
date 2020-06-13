@@ -1,9 +1,10 @@
-package id.co.personal.pasarikan
+package id.co.personal.pasarikan.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.co.personal.pasarikan.Model.Fish
+import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.adapter.FishItemAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -15,6 +16,7 @@ class HomeActivity : AppCompatActivity(){
 
         val fish = Fish().getListData()
         listFishItem.addAll(fish!!)
+        showRecyclerList()
     }
 
     private fun showRecyclerList(){
