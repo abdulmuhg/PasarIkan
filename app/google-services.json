@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1005901967420",
+    "firebase_url": "https://pasar-ikan.firebaseio.com",
+    "project_id": "pasar-ikan",
+    "storage_bucket": "pasar-ikan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005901967420:android:d11f376ed185ce0582d339",
+        "android_client_info": {
+          "package_name": "id.co.personal.pasarikan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005901967420-12g7s8th1bh9pf48dokuck1qe9qc0ttv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhGkBGEeLXcNeAdjVFU7cN93kSxKhbRXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005901967420-12g7s8th1bh9pf48dokuck1qe9qc0ttv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
