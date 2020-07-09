@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="id.co.personal.pasarikan">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="label" />
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.ItemDetailActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.StillImageActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

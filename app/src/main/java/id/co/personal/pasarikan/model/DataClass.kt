@@ -1,4 +1,4 @@
-package id.co.personal.pasarikan.Model
+package id.co.personal.pasarikan.model
 
 import id.co.personal.pasarikan.R
 import java.util.ArrayList
