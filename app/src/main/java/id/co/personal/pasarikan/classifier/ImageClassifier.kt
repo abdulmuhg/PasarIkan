@@ -153,7 +153,7 @@ internal constructor(context: Context) {
                     " model\n"
             textToShow += "Latency: " + Long.toString(endTime - startTime) + "ms\n"
             textToShow += if (labelProbList.isNullOrEmpty())
-                "No Result"
+                "-"
             else
                 printTopKLabels(labelProbList)
 
