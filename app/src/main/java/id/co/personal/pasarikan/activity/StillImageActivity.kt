@@ -24,10 +24,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.firebase.ml.common.FirebaseMLException
@@ -43,38 +40,33 @@ class StillImageActivity : BaseActivity() {
 
     private var currentPhotoFile: File? = null
     private var imagePreview: ImageView? = null
-    private var textView: TextView? = null
-
+    private lateinit var classText: EditText
     private var classifier: ImageClassifier? = null
-    private var currentImageIndex = 0
-    private var bundledImageList: Array<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_still_image)
         imagePreview = findViewById(R.id.image_preview)
-        textView = findViewById(R.id.result_text)
-        findViewById<ImageButton>(R.id.photo_camera_button)?.setOnClickListener { takePhoto() }
-        findViewById<ImageButton>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
-        findViewById<Button>(R.id.next_image_button)?.setOnClickListener { clickNextImage() }
-        findViewById<Button>(R.id.dummyButton)?.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Get list of bundled images.
-        bundledImageList = resources.getStringArray(R.array.image_name_array)
+        classText = findViewById(R.id.result_text)
 
         // Setup image classifier.
         try {
             classifier = ImageClassifier(this)
         } catch (e: FirebaseMLException) {
-            textView?.text = getString(R.string.fail_to_initialize_img_classifier)
+            classText.setText(getString(R.string.fail_to_initialize_img_classifier))
         }
 
-        // Classify the first image in the bundled list.
-        classifyBundledImage(currentImageIndex)
+        buttonFunction()
+        takePhoto()
+    }
+
+    private fun buttonFunction(){
+        findViewById<ImageButton>(R.id.photo_camera_button)?.setOnClickListener { takePhoto() }
+        findViewById<ImageButton>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
+        findViewById<Button>(R.id.dummyButton)?.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onDestroy() {
@@ -123,7 +115,7 @@ class StillImageActivity : BaseActivity() {
     /** Run image classification on the given [Bitmap] */
     private fun classifyImage(bitmap: Bitmap) {
         if (classifier == null) {
-            textView?.text = getString(R.string.uninitialized_img_classifier_or_invalid_context)
+            classText.setText(getString(R.string.uninitialized_img_classifier_or_invalid_context))
             return
         }
 
@@ -134,11 +126,11 @@ class StillImageActivity : BaseActivity() {
         classifier?.classifyFrame(bitmap)?.
             addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    textView?.text = task.result
+                    classText.setText("Ikan "+ task.result)
                 } else {
                     val e = task.exception
                     Log.e(TAG, "Error classifying frame", e)
-                    textView?.text = e?.message
+                    classText.setText(e?.message)
                 }
             }
     }
@@ -178,25 +170,6 @@ class StillImageActivity : BaseActivity() {
                 }
             }
         }
-    }
-
-    private fun clickNextImage() {
-        val imageList = bundledImageList
-        if (imageList.isNullOrEmpty()) { return }
-
-        currentImageIndex = (currentImageIndex + 1) % imageList.size
-        classifyBundledImage(currentImageIndex)
-    }
-
-    private fun classifyBundledImage(index: Int) {
-        val imageList = bundledImageList
-        if (imageList.isNullOrEmpty()) { return }
-
-        val imageName = imageList[index]
-        val drawableId = resources.getIdentifier(imageName, "drawable", packageName)
-        val bitmap = BitmapFactory.decodeResource(resources, drawableId)
-
-        classifyImage(bitmap)
     }
 
     companion object {

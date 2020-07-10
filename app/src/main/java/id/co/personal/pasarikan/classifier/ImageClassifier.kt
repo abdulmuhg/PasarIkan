@@ -148,15 +148,11 @@ internal constructor(context: Context) {
             // addition, since model download failures can be transient, and model download can also be
             // triggered in the background during inference, it is possible that a remote model is used
             // even if the first download fails.
-            var textToShow = "Source: " +
-                    (if (this.remoteModelDownloadSucceeded) "Remote" else "Local") +
-                    " model\n"
-            textToShow += "Latency: " + Long.toString(endTime - startTime) + "ms\n"
+            var textToShow = ""
             textToShow += if (labelProbList.isNullOrEmpty())
                 "-"
             else
                 printTopKLabels(labelProbList)
-
             // print the results
             textToShow
         }
@@ -175,10 +171,9 @@ internal constructor(context: Context) {
     /** Prints top-K labels, to be shown in UI as the results.  */
     private val printTopKLabels: (List<FirebaseVisionImageLabel>) -> String = {
         it.joinToString(
-            separator = "\n",
             limit = RESULTS_TO_SHOW
         ) { label ->
-            String.format(Locale.getDefault(), "Label: %s, Confidence: %4.2f", label.text, label.confidence)
+            String.format(Locale.getDefault(), "%s", label.text)
         }
     }
 
