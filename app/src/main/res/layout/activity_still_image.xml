@@ -10,9 +10,9 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@android:color/transparent">
+        android:background="@android:color/white">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_input_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,11 +22,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Input Item"
+                android:text="Input Barang"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="18sp" />
 
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -49,15 +49,17 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:layout_weight="1"
         app:cardCornerRadius="16dp">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/image_preview"
@@ -67,53 +69,72 @@
                 android:scaleType="centerCrop"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/photo_camera_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_round_photo_camera_24" />
-        </FrameLayout>
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_round_photo_camera_24"
+                app:backgroundTint="#FFFFFF"
+                app:borderWidth="0dp"
+                app:rippleColor="#FFFFFF" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:columnCount="2"
+        android:foregroundGravity="center"
         android:padding="16dp"
         android:useDefaultMargins="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            tools:text="Nama Barang:" />
+            android:text="Nama Barang:"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <EditText
             android:id="@+id/result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             tools:text="Ikan Tuna" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            tools:text="Harga:" />
+            android:text="Harga:"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
             <EditText
+                android:id="@+id/et_harga"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="10000"
+                android:inputType="number"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                tools:text="Rp 20000" />
+                tools:text="" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -129,7 +150,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@android:string/ok"
         android:visibility="visible" />
 </LinearLayout>

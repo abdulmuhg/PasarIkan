@@ -44,7 +44,11 @@ class FishItemAdapter (
         holder.itemName.text = item.name
         holder.itemPrice.text = "Rp "+ item.price
         holder.itemRating.rating = item.rating
-        holder.itemStock.text = "Stock " + item.stock
+        if (item.stock <= 10) {
+            holder.itemStock.text = "Stock " + item.stock + " Kg"
+        } else {
+            holder.itemStock.text = "Stock tersedia"
+        }
         holder.itemCity.text = "Kota " + item.city
         Glide.with(context)
             .load(item.photo)

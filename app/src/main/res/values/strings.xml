@@ -5,7 +5,7 @@
     <string name="prompt_user_profile_icon">User Profile Icon</string>
     <string name="prompt_about">About</string>
     <string name="prompt_profile_image">Profile Image</string>
-    <string name="about_description">Hi, My name is Abdul Mughni Al Fikri. I\'m an kinda new at android development. This is my first project using Android Studio, So please help me grow and rate my first app. Thank you :)</string>
+    <string name="about_description">Toko Ikan Abdul Mughni Al Fikri menjual berbagai macam ikan segar yang berada di laut selatan pulau jawa. Silahkan kunjungi toko kami dan dapatkan ikan segar setiap hari untuk kebutuhan toko/ keseharian kamu</string>
     <string name="title_item_details">Item Details</string>
     <string name="item_image">Item Image</string>
     <string name="fail_to_initialize_img_classifier">Failed to initialize an image classifier.</string>

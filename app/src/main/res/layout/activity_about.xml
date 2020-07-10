@@ -79,77 +79,77 @@
                     android:id="@+id/tv_details_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="@id/iv_profile"
                     app:layout_constraintStart_toStartOf="@id/iv_profile"
                     app:layout_constraintTop_toBottomOf="@id/iv_profile"
-                    tools:text="Abdul Mughni" />
+                    android:text="Abdul Mughni" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:columnCount="2"
+                android:foregroundGravity="center"
+                android:padding="16dp"
+                android:useDefaultMargins="true">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Name:"
+                    android:text="Nama:"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
                     android:text="Abdul Mughni Al Fikri"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:text="Email:"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:text="dev.abdulmughni@gmail.com"
                     android:textAlignment="textStart"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat:"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jln. Kampung Baru no. 12B, Bandung"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+            </GridLayout>
 
             <TextView
                 android:id="@+id/tv_details_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/about_description"
-                android:textAlignment="textStart"/>
+                android:textAlignment="textStart" />
 
         </LinearLayout>
 

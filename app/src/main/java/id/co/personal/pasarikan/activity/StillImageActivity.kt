@@ -31,6 +31,7 @@ import com.google.firebase.ml.common.FirebaseMLException
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.classifier.ImageClassifier
+import kotlinx.android.synthetic.main.activity_still_image.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -65,7 +66,13 @@ class StillImageActivity : BaseActivity() {
         findViewById<ImageButton>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
         findViewById<Button>(R.id.dummyButton)?.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("ikan", classText.text.toString())
+            intent.putExtra("harga", et_harga.text.toString())
+            intent.putExtra("data", "OK")
             startActivity(intent)
+        }
+        toolbar_input_item.setNavigationOnClickListener {
+            finish()
         }
     }
 
@@ -162,7 +169,7 @@ class StillImageActivity : BaseActivity() {
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         this,
-                        "com.google.firebase.codelab.mlkit.automl.fileprovider",
+                        "id.co.personal.pasarikan.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
