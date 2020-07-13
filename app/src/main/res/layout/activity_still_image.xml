@@ -22,31 +22,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Input Barang"
+                android:text="@string/item_input_title"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="18sp" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/photo_library_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/ic_photo_library" />
-
-    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -71,13 +53,25 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/photo_camera_button"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:foregroundGravity="center"
                 android:src="@drawable/ic_round_photo_camera_24"
+                app:backgroundTint="#FFFFFF"
+                app:borderWidth="0dp"
+                app:rippleColor="#FFFFFF" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/photo_library_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_photo_library"
+                android:layout_margin="16dp"
                 app:backgroundTint="#FFFFFF"
                 app:borderWidth="0dp"
                 app:rippleColor="#FFFFFF" />
@@ -96,7 +90,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama Barang:"
+            android:text="@string/item_name_colon"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <EditText
@@ -105,12 +99,13 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            tools:text="Ikan Tuna" />
+            tools:text="Ikan Tuna"
+            android:autofillHints="Ikan" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Harga:"
+            android:text="@string/price_colon"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         <LinearLayout
@@ -123,7 +118,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp"
+                android:text="@string/rupiah_rp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
             <EditText
@@ -131,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="10000"
+                android:hint="@string/hint_10000"
                 android:inputType="number"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                 tools:text="" />
@@ -139,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/ Kg"
+                android:text="@string/kg"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
         </LinearLayout>
 

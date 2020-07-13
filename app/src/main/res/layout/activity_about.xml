@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_round_arrow_back_24_white">
+            app:navigationIcon="@drawable/ic_round_arrow_back_24_black">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,8 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/prompt_about"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="?android:attr/textColorPrimaryInverse" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             </LinearLayout>
 
