@@ -16,6 +16,7 @@
     <string name="rupiah_rp">Rp</string>
     <string name="hint_10000">10000</string>
     <string name="kg">/ Kg</string>
+    <string name="edit_profil_title">Edit Profil</string>
     <string-array name="image_name_array">
         <item>ikan_tuna</item>
         <item>ikan_salmon</item>

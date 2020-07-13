@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import id.co.personal.pasarikan.model.Fish
+import id.co.personal.pasarikan.models.Fish
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.adapter.FishItemAdapter
 import kotlinx.android.synthetic.main.activity_home.*
@@ -53,7 +53,7 @@ class HomeActivity : AppCompatActivity(){
 
     private fun setOnClickButton(){
         btn_about.setOnClickListener {
-            startActivity(Intent(this, AboutActivity::class.java))
+            startActivity(Intent(this, EditProfileActivity::class.java))
         }
         floatingActionButton.setOnClickListener {
             startActivity(Intent(this, StillImageActivity::class.java))
