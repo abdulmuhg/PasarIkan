@@ -3,12 +3,14 @@ package id.co.personal.pasarikan.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DataSnapshot
@@ -46,35 +48,30 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(uri: Uri?) {
-        if (imageUri != null) {
-            val ref: StorageReference = storageRef.child(
-                "images/11/profile_picture"
-            )
-            val uploadTask = ref.putFile(uri!!)
-            uploadTask.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
-                    }
+        val loadingProgress = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
+        loadingProgress.progressHelper.barColor = Color.parseColor(R.color.primaryColor.toString())
+        loadingProgress.setCancelable(true)
+        loadingProgress.show()
+        val ref: StorageReference = storageRef.child(
+            "images/11/profile_picture"
+        )
+        val uploadTask = ref.putFile(uri!!)
+        uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                loadingProgress.dismissWithAnimation()
+                task.exception?.let {
+                    throw it
                 }
-                ref.downloadUrl
-            }.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    downloadUrl = task.result.toString()
-                    Toast.makeText(this, "Upload Successful", Toast.LENGTH_SHORT).show()
-                    writeUserData(
-                        "abdulmughni",
-                        et_owner_name.text.toString(),
-                        et_ktp.text.toString(),
-                        et_shop_address.text.toString(),
-                        et_phone_number.text.toString(),
-                        et_email.text.toString(),
-                        downloadUrl!!
-                    )
-                } else {
-                    // Handle failures
-                    // ...
-                }
+            }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                loadingProgress.dismissWithAnimation()
+                downloadUrl = task.result.toString()
+                Toast.makeText(this, "Image Upload Successful", Toast.LENGTH_SHORT).show()
+            } else {
+                // Handle failures
+                // ...
             }
         }
     }
@@ -85,6 +82,15 @@ class EditProfileActivity : AppCompatActivity() {
                 et_ktp.error = "Nomor KTP tidak boleh kosong"
             } else {
                 uploadImage(imageUri)
+                writeUserData(
+                    "abdulmughni",
+                    et_owner_name.text.toString(),
+                    et_ktp.text.toString(),
+                    et_shop_address.text.toString(),
+                    et_phone_number.text.toString(),
+                    et_email.text.toString(),
+                    downloadUrl!!
+                )
             }
 
         }
