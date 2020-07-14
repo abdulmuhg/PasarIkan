@@ -16,15 +16,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_round_arrow_back_24_black">
+            app:navigationIcon="@drawable/ic_round_close_24">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_profil_title"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/edit_profil_title"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_writeData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end|center"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_round_check_24"
+                    android:tint="@color/primaryColor" />
+
+            </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -104,11 +122,11 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_uploadImage"
-                    app:fabSize="mini"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_round_photo_camera_24"
                     app:backgroundTint="#FFFFFF"
+                    app:fabSize="mini"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -119,8 +137,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="Data Toko"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="16sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -196,15 +214,6 @@
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_writeData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="16dp"
-                android:text="Simpan"
-                android:textAllCaps="false" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
