@@ -128,7 +128,7 @@ class EditProfileActivity : AppCompatActivity() {
                 val successDialog = MyFunction.createSuccessDialog(
                     context = this,
                     titleText = "Success",
-                    contentText = "Image has uploaded"
+                    contentText = "Image has been uploaded"
                 )
                 successDialog.show()
             } else {
