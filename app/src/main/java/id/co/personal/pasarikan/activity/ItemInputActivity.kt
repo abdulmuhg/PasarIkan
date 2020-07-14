@@ -19,37 +19,44 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.common.FirebaseMLException
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.classifier.ImageClassifier
-import kotlinx.android.synthetic.main.activity_still_image.*
+import kotlinx.android.synthetic.main.activity_item_input.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class StillImageActivity : BaseActivity() {
+class ItemInputActivity : BaseActivity() {
 
     private var currentPhotoFile: File? = null
     private var imagePreview: ImageView? = null
     private lateinit var classText: EditText
     private var classifier: ImageClassifier? = null
-
+    private var imageUri: Uri? = null
+    private lateinit var dbRef: DatabaseReference
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageRef: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_still_image)
+        setContentView(R.layout.activity_item_input)
         imagePreview = findViewById(R.id.image_preview)
         classText = findViewById(R.id.result_text)
-
+        initial()
         // Setup image classifier.
         try {
             classifier = ImageClassifier(this)
@@ -59,6 +66,22 @@ class StillImageActivity : BaseActivity() {
 
         buttonFunction()
         takePhoto()
+    }
+
+    private fun initial(){
+        val database = Firebase.database
+        dbRef = database.getReference("users")
+        storage = Firebase.storage("gs://pasar-ikan.appspot.com")
+        // Get a non-default Storage bucket
+        val storage = Firebase.storage
+        // Create a storage reference from our app
+        storageRef = storage.reference
+        // Create a child reference
+        // imagesRef now points to "images"
+        var imagesRef: StorageReference? = storageRef.child("images")
+        // Child references can also take paths
+        // spaceRef now points to "images/space.jpg
+        // imagesRef still points to "images"
     }
 
     private fun buttonFunction(){
@@ -182,7 +205,7 @@ class StillImageActivity : BaseActivity() {
     companion object {
 
         /** Tag for the [Log].  */
-        private const val TAG = "StillImageActivity"
+        private const val TAG = "ItemInputActivity"
 
         /** Request code for starting photo capture activity  */
         private const val REQUEST_IMAGE_CAPTURE = 1

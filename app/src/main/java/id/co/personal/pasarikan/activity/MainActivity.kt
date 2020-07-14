@@ -9,6 +9,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_still_image)
+        setContentView(R.layout.activity_item_input)
     }
 }
