@@ -41,6 +41,12 @@
                     android:padding="16dp"
                     android:src="@drawable/ic_round_check_24"
                     android:tint="@color/primaryColor" />
+                <ProgressBar
+                    android:id="@+id/progress_write_data"
+                    android:visibility="gone"
+                    android:layout_margin="16dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
 
             </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
@@ -135,7 +141,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Data Toko"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="16sp" />
@@ -151,7 +157,7 @@
                     android:id="@+id/et_owner_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters" />
+                    android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

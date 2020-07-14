@@ -1,6 +1,7 @@
 package id.co.personal.pasarikan.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -8,57 +9,56 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import id.co.personal.pasarikan.MyFunction
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.User
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
-
 class EditProfileActivity : AppCompatActivity() {
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var storageRef: StorageReference
-    private lateinit var storage: FirebaseStorage
+    private var dbRef: DatabaseReference
+    private var storageRef: StorageReference
+    private var storage: FirebaseStorage = Firebase.storage
+    private var database: FirebaseDatabase = Firebase.database
     private var imageUri: Uri? = null
     private var downloadUrl: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-        buttonFunction()
-        val database = Firebase.database
-        dbRef = database.getReference("users")
-        readUserProfile()
-        storage = Firebase.storage
-        storageRef = storage.reference
 
+        readUserProfile()
+        buttonFunction()
+    }
+
+    init {
+        dbRef = database.getReference("users")
+        storageRef = storage.reference
     }
 
     private fun uploadImage(uri: Uri?) {
-        val loadingProgress = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
-        loadingProgress.progressHelper.barColor = Color.parseColor(R.color.primaryColor.toString())
-        loadingProgress.setCancelable(true)
-        loadingProgress.show()
+        val loadingDialog = MyFunction.createLoadingDialog(this, true)
+        loadingDialog.show()
         val ref: StorageReference = storageRef.child(
             "images/11/profile_picture"
         )
         val uploadTask = ref.putFile(uri!!)
         uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
-                loadingProgress.dismissWithAnimation()
+                loadingDialog.dismissWithAnimation()
                 task.exception?.let {
                     throw it
                 }
@@ -66,12 +66,14 @@ class EditProfileActivity : AppCompatActivity() {
             ref.downloadUrl
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                loadingProgress.dismissWithAnimation()
+                loadingDialog.dismissWithAnimation()
                 downloadUrl = task.result.toString()
-                Toast.makeText(this, "Image Upload Successful", Toast.LENGTH_SHORT).show()
+                dbRef.child("11").child("imageUrl").setValue(downloadUrl)
+                val successDialog = MyFunction.createSuccessDialog(context = this, titleText = "Success", contentText = "Image has uploaded")
+                successDialog.show()
             } else {
-                // Handle failures
-                // ...
+                val errorDialog = MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
+                errorDialog.show()
             }
         }
     }
@@ -81,7 +83,8 @@ class EditProfileActivity : AppCompatActivity() {
             if (et_ktp.text.isNullOrBlank()) {
                 et_ktp.error = "Nomor KTP tidak boleh kosong"
             } else {
-                uploadImage(imageUri)
+                btn_writeData.visibility = View.GONE
+                progress_write_data.visibility = View.VISIBLE
                 writeUserData(
                     "abdulmughni",
                     et_owner_name.text.toString(),
@@ -122,6 +125,7 @@ class EditProfileActivity : AppCompatActivity() {
                 .load(imageUri)
                 .apply(RequestOptions.circleCropTransform())
                 .into(iv_profile_picture)
+            uploadImage(imageUri)
         }
     }
 
@@ -143,7 +147,18 @@ class EditProfileActivity : AppCompatActivity() {
             email = email,
             imageUrl = imageUrl
         )
-        dbRef.child("11").setValue(userData)
+        dbRef.child("11").setValue(userData).addOnSuccessListener {
+            if (progress_write_data.visibility == View.VISIBLE){
+                progress_write_data.visibility = View.GONE
+            }
+            finish()
+        }
+            .addOnFailureListener {
+                if (progress_write_data.visibility == View.VISIBLE){
+                    progress_write_data.visibility = View.GONE
+                    btn_writeData.visibility = View.VISIBLE
+                }
+            }
     }
 
     private fun readUserProfile() {
