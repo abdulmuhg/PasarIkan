@@ -106,7 +106,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(uri: Uri?) {
-        val loadingDialog = MyFunction.createLoadingDialog(this, true)
+        val loadingDialog = MyFunction.createLoadingDialog(this)
         loadingDialog.show()
         val ref: StorageReference = storageRef.child(
             "images/11/profile_picture"
