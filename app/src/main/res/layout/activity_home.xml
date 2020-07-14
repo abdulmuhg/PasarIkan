@@ -25,13 +25,13 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.SearchView
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layoutDirection="rtl"
-                    app:queryHint="Cari Ikan"
-                    app:searchIcon="@drawable/ic_round_search_24_white" />
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:text="List Barang"/>
 
                 <ImageButton
                     android:id="@+id/btn_about"
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:backgroundTint="#FFFFFF"
+            app:backgroundTint="@color/accentColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_round_add_24" />

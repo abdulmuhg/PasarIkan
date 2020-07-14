@@ -39,7 +39,6 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-
         readUserProfile()
         buttonFunction()
     }
@@ -49,33 +48,27 @@ class EditProfileActivity : AppCompatActivity() {
         storageRef = storage.reference
     }
 
-    private fun uploadImage(uri: Uri?) {
-        val loadingDialog = MyFunction.createLoadingDialog(this, true)
-        loadingDialog.show()
-        val ref: StorageReference = storageRef.child(
-            "images/11/profile_picture"
-        )
-        val uploadTask = ref.putFile(uri!!)
-        uploadTask.continueWithTask { task ->
-            if (!task.isSuccessful) {
-                loadingDialog.dismissWithAnimation()
-                task.exception?.let {
-                    throw it
-                }
+    private fun readUserProfile() {
+        val userListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user = dataSnapshot.getValue<User>()
+                et_owner_name.setText(user!!.ownerName)
+                et_email.setText(user.email)
+                et_ktp.setText(user.noKTP)
+                et_phone_number.setText(user.phoneNumber)
+                et_shop_address.setText(user.address)
+                downloadUrl = user.imageUrl
+                Glide.with(this@EditProfileActivity)
+                    .load(downloadUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(iv_profile_picture)
             }
-            ref.downloadUrl
-        }.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                loadingDialog.dismissWithAnimation()
-                downloadUrl = task.result.toString()
-                dbRef.child("11").child("imageUrl").setValue(downloadUrl)
-                val successDialog = MyFunction.createSuccessDialog(context = this, titleText = "Success", contentText = "Image has uploaded")
-                successDialog.show()
-            } else {
-                val errorDialog = MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
-                errorDialog.show()
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
             }
         }
+        dbRef.child("11").addValueEventListener(userListener)
     }
 
     private fun buttonFunction() {
@@ -112,20 +105,37 @@ class EditProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null
-        ) {
-            imageUri = data.data
-            Glide.with(this)
-                .load(imageUri)
-                .apply(RequestOptions.circleCropTransform())
-                .into(iv_profile_picture)
-            uploadImage(imageUri)
+    private fun uploadImage(uri: Uri?) {
+        val loadingDialog = MyFunction.createLoadingDialog(this, true)
+        loadingDialog.show()
+        val ref: StorageReference = storageRef.child(
+            "images/11/profile_picture"
+        )
+        val uploadTask = ref.putFile(uri!!)
+        uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                loadingDialog.dismissWithAnimation()
+                task.exception?.let {
+                    throw it
+                }
+            }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                loadingDialog.dismissWithAnimation()
+                downloadUrl = task.result.toString()
+                dbRef.child("11").child("imageUrl").setValue(downloadUrl)
+                val successDialog = MyFunction.createSuccessDialog(
+                    context = this,
+                    titleText = "Success",
+                    contentText = "Image has uploaded"
+                )
+                successDialog.show()
+            } else {
+                val errorDialog =
+                    MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
+                errorDialog.show()
+            }
         }
     }
 
@@ -148,44 +158,37 @@ class EditProfileActivity : AppCompatActivity() {
             imageUrl = imageUrl
         )
         dbRef.child("11").setValue(userData).addOnSuccessListener {
-            if (progress_write_data.visibility == View.VISIBLE){
+            if (progress_write_data.visibility == View.VISIBLE) {
                 progress_write_data.visibility = View.GONE
             }
             finish()
         }
             .addOnFailureListener {
-                if (progress_write_data.visibility == View.VISIBLE){
+                if (progress_write_data.visibility == View.VISIBLE) {
                     progress_write_data.visibility = View.GONE
                     btn_writeData.visibility = View.VISIBLE
                 }
             }
     }
 
-    private fun readUserProfile() {
-        val userListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue<User>()
-                et_owner_name.setText(user!!.ownerName)
-                et_email.setText(user.email)
-                et_ktp.setText(user.noKTP)
-                et_phone_number.setText(user.phoneNumber)
-                et_shop_address.setText(user.address)
-                downloadUrl = user.imageUrl
-                Glide.with(this@EditProfileActivity)
-                    .load(downloadUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(iv_profile_picture)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
-            }
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null
+        ) {
+            imageUri = data.data
+            Glide.with(this)
+                .load(imageUri)
+                .apply(RequestOptions.circleCropTransform())
+                .into(iv_profile_picture)
+            uploadImage(imageUri)
         }
-        dbRef.child("11").addValueEventListener(userListener)
     }
 
     companion object {
-        private const val REQUEST_IMAGE_CAPTURE = 1
         private const val PICK_IMAGE_REQUEST = 2
     }
 }
