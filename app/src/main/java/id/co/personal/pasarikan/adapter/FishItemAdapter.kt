@@ -11,7 +11,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import id.co.personal.pasarikan.model.Fish
+import id.co.personal.pasarikan.models.Fish
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.ItemDetailActivity
 

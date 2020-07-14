@@ -1,13 +1,13 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/accentColor</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
 
         <item name="materialCardViewStyle">@style/Widget.PasarIkan.MaterialCardView</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.PasarIkan.SmallComponent</item>
@@ -16,12 +16,12 @@
     </style>
 
     <style name="ShapeAppearance.PasarIkan.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">cut</item>
+        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">4dp</item>
     </style>
 
     <style name="ShapeAppearance.PasarIkan.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">cut</item>
+        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
 
@@ -41,6 +41,10 @@
 
     <style name="ShapeAppearanceOverlay.PasarIkan.MaterialCardView.Cut" parent="">
         <item name="cornerFamily">cut</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.PasarIkan.MaterialCardView.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
