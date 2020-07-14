@@ -129,6 +129,7 @@ class ItemInputActivity : BaseActivity() {
             // Make use of FirebaseVisionImage.fromFilePath to take into account
             // Exif Orientation of the image files.
             REQUEST_IMAGE_CAPTURE -> {
+                val i = Uri.fromFile(currentPhotoFile)
                 FirebaseVisionImage.fromFilePath(this, Uri.fromFile(currentPhotoFile)).also {
                     classifyImage(it.bitmap)
                 }
