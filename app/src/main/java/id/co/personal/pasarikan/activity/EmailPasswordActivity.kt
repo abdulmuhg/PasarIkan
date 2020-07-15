@@ -15,6 +15,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import id.co.personal.pasarikan.MyFunction
 import id.co.personal.pasarikan.MyFunction.capitalizeWords
+import id.co.personal.pasarikan.MyFunction.createWarningDialog
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.User
 import kotlinx.android.synthetic.main.activity_email_password.*
@@ -56,28 +57,40 @@ class EmailPasswordActivity : AppCompatActivity() {
                 container_signUp.visibility = View.VISIBLE
                 text_signUp.visibility = View.GONE
                 text_signIn.visibility = View.VISIBLE
+                signInState = false
             } else {
                 container_signIn.visibility = View.VISIBLE
                 container_signUp.visibility = View.GONE
                 text_signUp.visibility = View.VISIBLE
                 text_signIn.visibility = View.GONE
+                signInState = true
             }
         }
         btn_signIn.setOnClickListener {
-            signIn(et_email.text.toString(), et_password.text.toString())
+            if (et_email.text.isNullOrBlank() || et_password.text.isNullOrBlank()){
+                val warningDialog = createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
+                warningDialog.show()
+            } else {
+                signIn(et_email.text.toString(), et_password.text.toString())
+            }
         }
         btn_signUp.setOnClickListener {
             val email = et_email_reg.text.toString().trim()
-            if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                if (et_password_reg.text.toString() == et_password_reg_confirm.text.toString()) {
-                    signUpNewUser(et_email_reg.text.toString(), et_password_reg.text.toString())
-                } else {
-                    layout_password_reg.error = "Password dan konfirmasi password tidak sesuai"
-                    layout_password_reg_confirm.error =
-                        "Password dan konfirmasi password tidak sesuai"
-                }
+            if (et_email_reg.text.isNullOrBlank() || et_password_reg.text.isNullOrBlank() || et_password_reg_confirm.text.isNullOrBlank()){
+                val warningDialog = createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
+                warningDialog.show()
             } else {
-                layout_email_reg.error = "Email tidak valid"
+                if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    if (et_password_reg.text.toString() == et_password_reg_confirm.text.toString()) {
+                        signUpNewUser(et_email_reg.text.toString(), et_password_reg.text.toString())
+                    } else {
+                        layout_password_reg.error = "Password dan konfirmasi password tidak sesuai"
+                        layout_password_reg_confirm.error =
+                            "Password dan konfirmasi password tidak sesuai"
+                    }
+                } else {
+                    layout_email_reg.error = "Email tidak valid"
+                }
             }
         }
     }

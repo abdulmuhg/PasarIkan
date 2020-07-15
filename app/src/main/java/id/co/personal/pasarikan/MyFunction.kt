@@ -54,7 +54,7 @@ object MyFunction {
         return dialog
     }
     fun createWarningDialog(context: Context, titleText: String = "Are you sure?", contentText: String = "", confirmText: String = "OK"): SweetAlertDialog{
-        val dialog = SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+        val dialog = SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
         dialog.titleText = titleText
         dialog.contentText = contentText
         dialog.confirmText = confirmText
