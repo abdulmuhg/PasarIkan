@@ -19,11 +19,10 @@ import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.User
 import kotlinx.android.synthetic.main.activity_email_password.*
 import kotlinx.android.synthetic.main.activity_email_password.et_email
-import java.util.regex.Pattern
 
 class EmailPasswordActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
     private var signInState: Boolean = true
+    private lateinit var auth: FirebaseAuth
     private var database: FirebaseDatabase = Firebase.database
     private var dbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +37,6 @@ class EmailPasswordActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         updateUI(currentUser)
     }
@@ -103,7 +101,7 @@ class EmailPasswordActivity : AppCompatActivity() {
                         val uid = user.uid
                         writeUserData(
                             uid = uid,
-                            imageUrl = "",
+                            imageUrl = DEFAULT_PROFILE_IMAGE,
                             email = userEmail!!,
                             phoneNumber = "",
                             address = "",
@@ -117,7 +115,6 @@ class EmailPasswordActivity : AppCompatActivity() {
                     }
                 } else {
                     loading.dismissWithAnimation()
-                    // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
                         baseContext, "Authentication failed.",
@@ -190,5 +187,6 @@ class EmailPasswordActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "EmailPassword"
+        private const val DEFAULT_PROFILE_IMAGE = "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/default%2Fdefault_profile_picture.png?alt=media&token=1c1f2e09-7ba2-4c2d-aed9-2055c6fa9114"
     }
 }
