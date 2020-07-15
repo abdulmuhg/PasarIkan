@@ -8,6 +8,9 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 object MyFunction {
+
+    fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.capitalize() }
+
     fun getCurrentUser(){
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {

@@ -22,8 +22,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup"
         tools:replace="android:icon">
-        <activity android:name=".activity.EmailPasswordActivity"></activity>
-        <activity android:name=".activity.EditProfileActivity"></activity>
+        <activity android:name=".activity.EmailPasswordActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.EditProfileActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -48,11 +54,7 @@
             android:name=".activity.ItemInputActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

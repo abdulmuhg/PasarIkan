@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -30,15 +31,17 @@ import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : AppCompatActivity() {
-    private var dbRef: DatabaseReference
-    private var storageRef: StorageReference
     private var storage: FirebaseStorage = Firebase.storage
+    private var storageRef: StorageReference
     private var database: FirebaseDatabase = Firebase.database
+    private var dbRef: DatabaseReference
     private var imageUri: Uri? = null
     private var downloadUrl: String? = null
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        auth = FirebaseAuth.getInstance()
         readUserProfile()
         buttonFunction()
     }
@@ -88,13 +91,17 @@ class EditProfileActivity : AppCompatActivity() {
                     downloadUrl!!
                 )
             }
-
         }
         toolbar_edit_profil.setNavigationOnClickListener {
             finish()
         }
         btn_uploadImage.setOnClickListener {
             openFileChooser()
+        }
+        btn_logOut.setOnClickListener {
+            auth.signOut().also {
+                startActivity(Intent(this, EmailPasswordActivity::class.java))
+            }
         }
     }
 
