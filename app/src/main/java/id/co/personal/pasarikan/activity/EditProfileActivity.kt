@@ -105,7 +105,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
         btn_logOut.setOnClickListener {
             auth.signOut().also {
-                startActivity(Intent(this, LoginRegisterActivity::class.java))
+                val i = Intent(this, LoginRegisterActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(i)
             }
         }
     }
