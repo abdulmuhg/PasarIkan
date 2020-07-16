@@ -44,7 +44,9 @@ class EmailPasswordActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            startActivity(Intent(this, HomeActivity::class.java))
+            val i = Intent(this, HomeActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(i)
         } else {
 
         }
@@ -175,6 +177,7 @@ class EmailPasswordActivity : AppCompatActivity() {
         imageUrl: String
     ) {
         val userData = User(
+            userId = uid,
             username = userName,
             ownerName = ownerName,
             noKTP = noKTP,

@@ -83,7 +83,7 @@ class EditProfileActivity : AppCompatActivity() {
                 Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        dbRef.child(uid).addValueEventListener(userListener)
+        dbRef.child(uid).addListenerForSingleValueEvent(userListener)
     }
 
     private fun buttonFunction() {
@@ -129,7 +129,7 @@ class EditProfileActivity : AppCompatActivity() {
         val loadingDialog = MyFunction.createLoadingDialog(this)
         loadingDialog.show()
         val ref: StorageReference = storageRef.child(
-            "images/11/profile_picture"
+            "images/profile/"+uid
         )
         val uploadTask = ref.putFile(uri!!)
         uploadTask.continueWithTask { task ->
@@ -144,13 +144,14 @@ class EditProfileActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 loadingDialog.dismissWithAnimation()
                 downloadUrl = task.result.toString()
-                dbRef.child("11").child("imageUrl").setValue(downloadUrl)
+                dbRef.child(uid).child("imageUrl").setValue(downloadUrl)
                 val successDialog = MyFunction.createSuccessDialog(
                     context = this,
                     titleText = "Success",
                     contentText = "Image has been uploaded"
                 )
                 successDialog.show()
+                readUserProfile(uid)
             } else {
                 val errorDialog =
                     MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
@@ -169,6 +170,7 @@ class EditProfileActivity : AppCompatActivity() {
         imageUrl: String?
     ) {
         val userData = User(
+            userId = uid,
             ownerName = ownerName,
             noKTP = noKTP,
             address = address,

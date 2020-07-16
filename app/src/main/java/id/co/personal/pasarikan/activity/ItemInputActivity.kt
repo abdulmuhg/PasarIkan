@@ -23,18 +23,27 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
+import android.view.View
 import android.widget.*
 import androidx.core.content.FileProvider
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.common.FirebaseMLException
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import id.co.personal.pasarikan.MyFunction
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.classifier.ImageClassifier
+import id.co.personal.pasarikan.models.Item
+import id.co.personal.pasarikan.models.User
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_item_input.*
 import java.io.File
 import java.io.IOException
@@ -45,47 +54,77 @@ class ItemInputActivity : BaseActivity() {
 
     private var currentPhotoFile: File? = null
     private var imagePreview: ImageView? = null
-    private lateinit var classText: EditText
     private var classifier: ImageClassifier? = null
+    private lateinit var classText: EditText
+    private var dbRef: DatabaseReference
+    private var storage: FirebaseStorage = Firebase.storage
+    private var database: FirebaseDatabase = Firebase.database
+    private var storageRef: StorageReference
+    private var currentUser: FirebaseUser? = null
+    private lateinit var auth: FirebaseAuth
+    private var uid: String = ""
+    private var item = Item()
+    private var itemImageUrl: String? = null
     private var imageUri: Uri? = null
-    private lateinit var dbRef: DatabaseReference
-    private lateinit var storage: FirebaseStorage
-    private lateinit var storageRef: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_input)
         imagePreview = findViewById(R.id.image_preview)
         classText = findViewById(R.id.result_text)
-        initial()
-        // Setup image classifier.
+        auth = FirebaseAuth.getInstance()
         try {
             classifier = ImageClassifier(this)
         } catch (e: FirebaseMLException) {
             classText.setText(getString(R.string.fail_to_initialize_img_classifier))
         }
-
         buttonFunction()
         takePhoto()
     }
 
-    private fun initial(){
-        val database = Firebase.database
-        dbRef = database.getReference("users")
-        storage = Firebase.storage("gs://pasar-ikan.appspot.com")
-        val storage = Firebase.storage
+    override fun onStart() {
+        super.onStart()
+        currentUser = auth.currentUser
+        currentUser?.let {
+            uid = currentUser!!.uid
+            readUserProfile(uid)
+        }
+    }
+
+    init {
+        database = Firebase.database
         storageRef = storage.reference
-        var imagesRef: StorageReference? = storageRef.child("images")
+        dbRef = database.reference
+    }
+
+    private fun readUserProfile(uid: String) {
+        val userListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user = dataSnapshot.getValue<User>()
+                item.user_id = user!!.userId
+                item.address = user.address
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        dbRef.child("users").child(uid).addListenerForSingleValueEvent(userListener)
     }
 
     private fun buttonFunction(){
         findViewById<ImageButton>(R.id.photo_camera_button)?.setOnClickListener { takePhoto() }
         findViewById<ImageButton>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
         findViewById<Button>(R.id.dummyButton)?.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.putExtra("ikan", classText.text.toString())
-            intent.putExtra("harga", et_harga.text.toString())
-            intent.putExtra("data", "OK")
-            startActivity(intent)
+            val isPriceEmpty = et_harga.text.toString().isEmpty()
+            if (isPriceEmpty) {
+                Toast.makeText(this, "Mohon cantumkan harga", Toast.LENGTH_SHORT).show()
+            } else {
+                item.item_id = System.currentTimeMillis().toString()
+                item.name = classText.text.toString()
+                item.description = ""
+                item.price = et_harga.text.toString().toInt()
+                uploadImage(imageUri)
+            }
         }
         toolbar_input_item.setNavigationOnClickListener {
             finish()
@@ -95,6 +134,74 @@ class ItemInputActivity : BaseActivity() {
     override fun onDestroy() {
         classifier?.close()
         super.onDestroy()
+    }
+
+    private fun uploadImage(uri: Uri?) {
+        val loadingDialog = MyFunction.createLoadingDialog(this, "Uploading Image", true)
+        loadingDialog.show()
+        val ref: StorageReference = storageRef.child(
+            "items/"+item.item_id+"/"+System.currentTimeMillis()
+        )
+        val uploadTask = ref.putFile(uri!!)
+        uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                loadingDialog.dismissWithAnimation()
+                task.exception?.let {
+                    throw it
+                }
+            }
+            ref.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                loadingDialog.dismissWithAnimation()
+                itemImageUrl = task.result.toString()
+                dbRef.child("items").child(item.item_id).child("item_images").setValue(itemImageUrl)
+                writeItemData(
+                    uid,
+                    item.item_id,
+                    item.name,
+                    item.description,
+                    item.price,
+                    item.address,
+                    itemImageUrl!!
+                )
+            } else {
+                val errorDialog =
+                    MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
+                errorDialog.show()
+            }
+        }
+    }
+
+    private fun writeItemData(
+        uid: String,
+        item_id: String,
+        name: String,
+        desc: String,
+        price: Int,
+        address: String,
+        images: String
+    ) {
+        val itemData = Item(
+            user_id = uid,
+            item_id = item_id,
+            name = name,
+            description = desc,
+            price = price,
+            address = address,
+            item_images = images
+        )
+        dbRef.child("items").child(item_id).setValue(itemData)
+            .addOnSuccessListener {
+                val i = Intent(this, HomeActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+        }
+            .addOnFailureListener {
+                val errorDialog =
+                    MyFunction.createErrorDialog(this, contentText = "Failed connect to server")
+                errorDialog.show()
+            }
     }
 
     /** Create a file to pass to camera app */
@@ -117,21 +224,22 @@ class ItemInputActivity : BaseActivity() {
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK) return
-
         when (requestCode) {
             // Make use of FirebaseVisionImage.fromFilePath to take into account
             // Exif Orientation of the image files.
             REQUEST_IMAGE_CAPTURE -> {
-                val i = Uri.fromFile(currentPhotoFile)
+                val capturedImageUri = Uri.fromFile(currentPhotoFile)
                 FirebaseVisionImage.fromFilePath(this, Uri.fromFile(currentPhotoFile)).also {
                     classifyImage(it.bitmap)
                 }
+                imageUri = capturedImageUri
             }
             REQUEST_PHOTO_LIBRARY -> {
                 val selectedImageUri = data?.data ?: return
                 FirebaseVisionImage.fromFilePath(this, selectedImageUri).also {
                     classifyImage(it.bitmap)
                 }
+                imageUri = selectedImageUri
             }
         }
     }
@@ -166,7 +274,6 @@ class ItemInputActivity : BaseActivity() {
         // Only accept JPEG or PNG format.
         val mimeTypes = arrayOf("image/jpeg", "image/png")
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-
         startActivityForResult(intent, REQUEST_PHOTO_LIBRARY)
     }
 

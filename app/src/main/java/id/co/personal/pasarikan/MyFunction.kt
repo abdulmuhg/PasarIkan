@@ -32,7 +32,7 @@ object MyFunction {
     fun myToast(context: Context, text: String){
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
-    fun createLoadingDialog(context: Context, cancelable: Boolean = false, titleText: String = "Please Wait"): SweetAlertDialog{
+    fun createLoadingDialog(context: Context, titleText: String = "Please Wait", cancelable: Boolean = false): SweetAlertDialog{
         val loadingProgress = SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE)
         loadingProgress.progressHelper.barColor = Color.parseColor("#64b5f6")
         loadingProgress.setCancelable(cancelable)
