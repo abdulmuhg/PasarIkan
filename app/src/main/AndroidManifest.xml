@@ -6,8 +6,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera"
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -20,9 +22,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup"
         tools:replace="android:icon">
-        <activity android:name=".activity.EditProfileActivity">
-
+        <activity android:name=".activity.EmailPasswordActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".activity.EditProfileActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -45,13 +52,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ItemInputActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

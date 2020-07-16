@@ -4,7 +4,8 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class User (
-    var username: String = "",
+    var userId: String= "",
+    var username: String? = "",
     var ownerName: String = "",
     var noKTP: String = "",
     var address: String = "",

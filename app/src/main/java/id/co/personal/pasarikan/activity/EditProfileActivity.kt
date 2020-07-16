@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -16,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -30,16 +33,28 @@ import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : AppCompatActivity() {
-    private var dbRef: DatabaseReference
-    private var storageRef: StorageReference
     private var storage: FirebaseStorage = Firebase.storage
+    private var storageRef: StorageReference
     private var database: FirebaseDatabase = Firebase.database
+    private var dbRef: DatabaseReference
     private var imageUri: Uri? = null
     private var downloadUrl: String? = null
+    private lateinit var auth: FirebaseAuth
+    private var currentUser: FirebaseUser? = null
+    private var uid: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-        readUserProfile()
+        auth = FirebaseAuth.getInstance()
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        currentUser = auth.currentUser
+        currentUser?.let {
+            uid = currentUser!!.uid
+            readUserProfile(uid)
+        }
         buttonFunction()
     }
 
@@ -48,7 +63,7 @@ class EditProfileActivity : AppCompatActivity() {
         storageRef = storage.reference
     }
 
-    private fun readUserProfile() {
+    private fun readUserProfile(uid: String) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user = dataSnapshot.getValue<User>()
@@ -68,33 +83,38 @@ class EditProfileActivity : AppCompatActivity() {
                 Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        dbRef.child("11").addValueEventListener(userListener)
+        dbRef.child(uid).addListenerForSingleValueEvent(userListener)
     }
 
     private fun buttonFunction() {
         btn_writeData.setOnClickListener {
-            if (et_ktp.text.isNullOrBlank()) {
-                et_ktp.error = "Nomor KTP tidak boleh kosong"
+            val email = et_email.text.toString().trim()
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                et_email.error = "Email tidak valid"
             } else {
                 btn_writeData.visibility = View.GONE
                 progress_write_data.visibility = View.VISIBLE
                 writeUserData(
-                    "abdulmughni",
+                    uid,
                     et_owner_name.text.toString(),
                     et_ktp.text.toString(),
                     et_shop_address.text.toString(),
                     et_phone_number.text.toString(),
                     et_email.text.toString(),
-                    downloadUrl!!
+                    downloadUrl
                 )
             }
-
         }
         toolbar_edit_profil.setNavigationOnClickListener {
             finish()
         }
         btn_uploadImage.setOnClickListener {
             openFileChooser()
+        }
+        btn_logOut.setOnClickListener {
+            auth.signOut().also {
+                startActivity(Intent(this, EmailPasswordActivity::class.java))
+            }
         }
     }
 
@@ -109,7 +129,7 @@ class EditProfileActivity : AppCompatActivity() {
         val loadingDialog = MyFunction.createLoadingDialog(this)
         loadingDialog.show()
         val ref: StorageReference = storageRef.child(
-            "images/11/profile_picture"
+            "images/profile/"+uid
         )
         val uploadTask = ref.putFile(uri!!)
         uploadTask.continueWithTask { task ->
@@ -124,13 +144,14 @@ class EditProfileActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 loadingDialog.dismissWithAnimation()
                 downloadUrl = task.result.toString()
-                dbRef.child("11").child("imageUrl").setValue(downloadUrl)
+                dbRef.child(uid).child("imageUrl").setValue(downloadUrl)
                 val successDialog = MyFunction.createSuccessDialog(
                     context = this,
                     titleText = "Success",
                     contentText = "Image has been uploaded"
                 )
                 successDialog.show()
+                readUserProfile(uid)
             } else {
                 val errorDialog =
                     MyFunction.createErrorDialog(this, contentText = "Failed to upload an image")
@@ -140,16 +161,16 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun writeUserData(
-        userName: String,
+        uid: String,
         ownerName: String,
         noKTP: String,
         address: String,
         phoneNumber: String,
         email: String,
-        imageUrl: String
+        imageUrl: String?
     ) {
         val userData = User(
-            username = userName,
+            userId = uid,
             ownerName = ownerName,
             noKTP = noKTP,
             address = address,
@@ -157,11 +178,13 @@ class EditProfileActivity : AppCompatActivity() {
             email = email,
             imageUrl = imageUrl
         )
-        dbRef.child("11").setValue(userData).addOnSuccessListener {
+        dbRef.child(uid).setValue(userData).addOnSuccessListener {
             if (progress_write_data.visibility == View.VISIBLE) {
-                progress_write_data.visibility = View.GONE
+                currentUser?.updateEmail(email)?.addOnSuccessListener {
+                    progress_write_data.visibility = View.GONE
+                    finish()
+                }
             }
-            finish()
         }
             .addOnFailureListener {
                 if (progress_write_data.visibility == View.VISIBLE) {
@@ -182,6 +205,7 @@ class EditProfileActivity : AppCompatActivity() {
             imageUri = data.data
             Glide.with(this)
                 .load(imageUri)
+                .placeholder(R.drawable.ic_default_user_picture)
                 .apply(RequestOptions.circleCropTransform())
                 .into(iv_profile_picture)
             uploadImage(imageUri)

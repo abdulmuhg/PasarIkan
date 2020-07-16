@@ -11,13 +11,13 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import id.co.personal.pasarikan.models.Fish
+import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.ItemDetailActivity
 
 class FishItemAdapter (
     private val context: Context,
-    private val listItem: ArrayList<Fish>
+    private val listItem: ArrayList<Item>
 ) : RecyclerView.Adapter<FishItemAdapter.FishItemViewHolder>() {
     inner class FishItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemImage: ImageView = view.findViewById(R.id.iv_fish)
@@ -49,15 +49,15 @@ class FishItemAdapter (
         } else {
             holder.itemStock.text = "Stock tersedia"
         }
-        holder.itemCity.text = "Kota " + item.city
+        holder.itemCity.text = "Kota " + item.address
         Glide.with(context)
-            .load(item.photo)
+            .load(item.item_images)
             .into(holder.itemImage)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ItemDetailActivity::class.java)
             intent.putExtra("fishName", item.name)
             intent.putExtra("desc", item.description)
-            intent.putExtra("img", item.photo)
+            intent.putExtra("img", item.item_images)
             context.startActivity(intent)
         }
     }
