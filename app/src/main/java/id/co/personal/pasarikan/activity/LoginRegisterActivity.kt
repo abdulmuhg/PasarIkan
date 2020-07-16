@@ -18,17 +18,17 @@ import id.co.personal.pasarikan.MyFunction.capitalizeWords
 import id.co.personal.pasarikan.MyFunction.createWarningDialog
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.User
-import kotlinx.android.synthetic.main.activity_email_password.*
-import kotlinx.android.synthetic.main.activity_email_password.et_email
+import kotlinx.android.synthetic.main.activity_login_register.*
+import kotlinx.android.synthetic.main.activity_login_register.et_email
 
-class EmailPasswordActivity : AppCompatActivity() {
+class LoginRegisterActivity : AppCompatActivity() {
     private var signInState: Boolean = true
     private lateinit var auth: FirebaseAuth
     private var database: FirebaseDatabase = Firebase.database
     private var dbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_password)
+        setContentView(R.layout.activity_login_register)
         auth = FirebaseAuth.getInstance()
         onClickEvents()
     }

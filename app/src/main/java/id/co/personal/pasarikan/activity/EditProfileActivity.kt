@@ -1,20 +1,13 @@
 package id.co.personal.pasarikan.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +22,6 @@ import com.google.firebase.storage.ktx.storage
 import id.co.personal.pasarikan.MyFunction
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.User
-import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : AppCompatActivity() {
@@ -113,7 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
         btn_logOut.setOnClickListener {
             auth.signOut().also {
-                startActivity(Intent(this, EmailPasswordActivity::class.java))
+                startActivity(Intent(this, LoginRegisterActivity::class.java))
             }
         }
     }
