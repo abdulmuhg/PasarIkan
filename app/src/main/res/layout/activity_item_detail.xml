@@ -9,14 +9,15 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:background="@android:color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_item_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_round_arrow_back_24_white">
+            app:navigationIcon="@drawable/ic_round_arrow_back_24_black">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/title_item_details"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="?android:attr/textColorPrimaryInverse" />
+                    android:textColor="@android:color/primary_text_light" />
 
             </LinearLayout>
 
@@ -47,46 +48,227 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/iv_details_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="400dp"
+                android:contentDescription="@string/item_image"
+                android:maxHeight="400dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-                <ImageView
-                    android:id="@+id/iv_details_images"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/gray900"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Rp 50000/ Kg" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray700"
+                    android:textSize="18sp"
+                    tools:text="Ikan Salmon" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray700"
+                    android:textSize="14sp"
+                    tools:text="Stock: 70 Kg" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:maxHeight="200dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/backgrounds/scenic"
-                    android:contentDescription="@string/item_image" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_details_name"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_star"
+                        android:drawablePadding="8dp"
+                        android:gravity="center"
+                        android:textColor="@color/gray900"
+                        android:textSize="14sp"
+                        tools:text="3.0" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_selled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center"
+                        android:textColor="@color/gray700"
+                        android:textSize="14sp"
+                        android:text="Terjual 0" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray300" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:textColor="?android:attr/textColorPrimaryInverse"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Ikan Tuna" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:text="Dijual Oleh"
+                    android:textColor="@color/gray700" />
 
-            <TextView
-                android:id="@+id/tv_details_desc"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_seller_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Dadang Kanedi"
+                    android:textColor="@color/gray700"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_verified" />
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Jakarta Utara"
+                android:textColor="@color/gray700" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray300" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Informasi Produk"
+                android:textColor="@color/gray900"
+                android:textStyle="bold" />
+
+
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="@tools:sample/lorem/random"
-                android:textAlignment="textStart"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:columnCount="2"
+                android:useDefaultMargins="true">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Berat"
+                    android:textColor="@color/gray900" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="1000 Gram"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray700" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Kondisi"
+                    android:textColor="@color/gray900" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Baru"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray700" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="Pemesanan Min"
+                    android:textColor="@color/gray700" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="1000 Gram"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/gray700" />
+
+            </GridLayout>
+            <View
                 android:layout_marginTop="16dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray300" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray700"
+                    android:layout_marginBottom="16dp"
+                    android:text="Deskripsi Produk"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray700"
+                    android:text="Ikan Segar yang diambil langsung dari perairan selatan laut Jawa"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

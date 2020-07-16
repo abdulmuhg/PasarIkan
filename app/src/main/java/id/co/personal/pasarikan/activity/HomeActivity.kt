@@ -11,7 +11,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.R
-import id.co.personal.pasarikan.adapter.FishItemAdapter
+import id.co.personal.pasarikan.adapter.ItemAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(){
@@ -55,7 +55,6 @@ class HomeActivity : AppCompatActivity(){
                 for (postSnapshot in dataSnapshot.children) {
                     val items = postSnapshot?.getValue<Item>()
                     items?.let { it1 -> listItemItem.add(it1) }
-                    listItemItem.reverse()
                 }
                 showRecyclerList()
             }
@@ -67,8 +66,9 @@ class HomeActivity : AppCompatActivity(){
     }
 
     private fun showRecyclerList(){
-        val adapter = FishItemAdapter (this, listItemItem)
-        rv_fish_item.layoutManager =LinearLayoutManager(
+        listItemItem.reverse()
+        val adapter = ItemAdapter (this, listItemItem)
+        rv_fish_item.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL,
             false

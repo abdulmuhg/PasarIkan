@@ -102,6 +102,7 @@ class ItemInputActivity : BaseActivity() {
                 val user = dataSnapshot.getValue<User>()
                 item.user_id = user!!.userId
                 item.address = user.address
+                item.seller_name = user.ownerName
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -163,7 +164,8 @@ class ItemInputActivity : BaseActivity() {
                     item.description,
                     item.price,
                     item.address,
-                    itemImageUrl!!
+                    itemImageUrl!!,
+                    item.seller_name
                 )
             } else {
                 val errorDialog =
@@ -180,7 +182,8 @@ class ItemInputActivity : BaseActivity() {
         desc: String,
         price: Int,
         address: String,
-        images: String
+        images: String,
+        sellerName: String
     ) {
         val itemData = Item(
             user_id = uid,
@@ -189,7 +192,8 @@ class ItemInputActivity : BaseActivity() {
             description = desc,
             price = price,
             address = address,
-            item_images = images
+            item_images = images,
+            seller_name = sellerName
         )
         dbRef.child("items").child(item_id).setValue(itemData)
             .addOnSuccessListener {
