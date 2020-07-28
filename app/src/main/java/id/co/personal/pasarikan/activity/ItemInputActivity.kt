@@ -124,7 +124,11 @@ class ItemInputActivity : BaseActivity() {
                 item.name = classText.text.toString()
                 item.description = ""
                 item.price = et_harga.text.toString().toInt()
-                uploadImage(imageUri)
+                if (imageUri == null) {
+                    Toast.makeText(this, "Mohon Cantumkan Foto Barang", Toast.LENGTH_SHORT).show()
+                } else {
+                    uploadImage(imageUri)
+                }
             }
         }
         toolbar_input_item.setNavigationOnClickListener {

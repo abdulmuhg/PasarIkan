@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -26,7 +27,7 @@ class HomeActivity : AppCompatActivity(){
         listItemItem.clear()
         getItem()
         setOnClickButton()
-
+        pb_list_item.visibility = View.VISIBLE
     }
     private fun readUserProfile() {
         val database = Firebase.database
@@ -46,16 +47,19 @@ class HomeActivity : AppCompatActivity(){
         dbRef = database.getReference("items")
         val itemListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                pb_list_item.visibility = View.VISIBLE
 //                val children = dataSnapshot.children
 //                children.forEach {
 //                    val items = it?.getValue<Item>()
 //                    items?.let { it1 -> listItemItem.add(it1) }
 //                    listItemItem.reverse()
 //                }
+                listItemItem.clear()
                 for (postSnapshot in dataSnapshot.children) {
                     val items = postSnapshot?.getValue<Item>()
                     items?.let { it1 -> listItemItem.add(it1) }
                 }
+                pb_list_item.visibility = View.INVISIBLE
                 showRecyclerList()
             }
             override fun onCancelled(databaseError: DatabaseError) {

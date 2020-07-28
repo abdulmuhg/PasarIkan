@@ -15,7 +15,6 @@
  */
 package id.co.personal.pasarikan.activity
 
-
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

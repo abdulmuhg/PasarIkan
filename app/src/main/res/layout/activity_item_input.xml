@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/gray300"
             android:gravity="center">
 
             <ImageView
@@ -48,8 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxHeight="300dp"
-                android:scaleType="centerCrop"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:scaleType="centerCrop" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/photo_camera_button"
