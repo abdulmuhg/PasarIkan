@@ -3,6 +3,7 @@ package id.co.personal.pasarikan.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,10 @@ import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.ItemDetailActivity
 
-class FishItemAdapter (
+class ItemAdapter (
     private val context: Context,
     private val listItem: ArrayList<Item>
-) : RecyclerView.Adapter<FishItemAdapter.FishItemViewHolder>() {
+) : RecyclerView.Adapter<ItemAdapter.FishItemViewHolder>() {
     inner class FishItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemImage: ImageView = view.findViewById(R.id.iv_fish)
         val itemName: TextView = view.findViewById(R.id.tv_name)
@@ -38,7 +39,7 @@ class FishItemAdapter (
         return listItem.size
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onBindViewHolder(holder: FishItemViewHolder, position: Int) {
         val item = listItem[position]
         holder.itemName.text = item.name
@@ -46,6 +47,7 @@ class FishItemAdapter (
         holder.itemRating.rating = item.rating
         if (item.stock <= 10) {
             holder.itemStock.text = "Stock " + item.stock + " Kg"
+            holder.itemStock.setTextColor(Color.parseColor("#E53935"))
         } else {
             holder.itemStock.text = "Stock tersedia"
         }
@@ -55,10 +57,11 @@ class FishItemAdapter (
             .into(holder.itemImage)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ItemDetailActivity::class.java)
-            intent.putExtra("fishName", item.name)
-            intent.putExtra("desc", item.description)
-            intent.putExtra("img", item.item_images)
+            intent.putExtra(EXTRA_ITEM_ID, item.item_id)
             context.startActivity(intent)
         }
+    }
+    companion object {
+        const val EXTRA_ITEM_ID = "e_i_id"
     }
 }

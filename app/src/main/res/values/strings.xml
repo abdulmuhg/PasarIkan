@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PasarIkan</string>
+    <string name="app_name">Pasar Ikan</string>
     <string name="desc_image_item">Image Item</string>
     <string name="next_image">Next Image</string>
     <string name="prompt_user_profile_icon">User Profile Icon</string>
@@ -17,6 +17,7 @@
     <string name="hint_10000">10000</string>
     <string name="kg">/ Kg</string>
     <string name="edit_profil_title">Edit Profil</string>
+    <string name="prompt_app_icon">App Icon</string>
     <string-array name="image_name_array">
         <item>ikan_tuna</item>
         <item>ikan_salmon</item>

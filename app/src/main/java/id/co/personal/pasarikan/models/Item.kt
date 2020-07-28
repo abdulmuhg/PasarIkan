@@ -10,5 +10,6 @@ class Item(
     var stock: Int = 100,
     var address: String = "",
     var min_buy: Int = 1,
-    var item_images: String = ""
+    var item_images: String = "",
+    var seller_name: String = ""
 )

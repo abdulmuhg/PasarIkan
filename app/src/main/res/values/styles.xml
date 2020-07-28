@@ -8,11 +8,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-
         <item name="materialCardViewStyle">@style/Widget.PasarIkan.MaterialCardView</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.PasarIkan.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.PasarIkan.MediumComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.PasarIkan.LargeComponent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ShapeAppearance.PasarIkan.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
