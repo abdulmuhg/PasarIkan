@@ -22,7 +22,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup"
         tools:replace="android:icon">
-        <activity android:name=".activity.ItemImageDetailActivity"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_main"/>
+        <activity android:name=".activity.ItemImageDetailActivity" />
         <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +35,7 @@
         </activity>
         <activity
             android:name=".activity.LoginRegisterActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <activity android:name=".activity.EditProfileActivity" />
 
         <provider
@@ -51,9 +54,6 @@
 
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.ItemDetailActivity" />
-        <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ItemInputActivity"
             android:screenOrientation="portrait" />

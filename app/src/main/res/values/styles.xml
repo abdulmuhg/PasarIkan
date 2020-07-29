@@ -14,9 +14,9 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.PasarIkan.LargeComponent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme.WithActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
     </style>
 
     <style name="ShapeAppearance.PasarIkan.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
