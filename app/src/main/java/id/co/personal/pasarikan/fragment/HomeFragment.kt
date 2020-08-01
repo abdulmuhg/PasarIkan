@@ -1,25 +1,19 @@
-package id.co.personal.pasarikan.ui.home
+package id.co.personal.pasarikan.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import id.co.personal.pasarikan.R
-import id.co.personal.pasarikan.activity.EditProfileActivity
-import id.co.personal.pasarikan.activity.HomeActivity
-import id.co.personal.pasarikan.activity.ItemInputActivity
 import id.co.personal.pasarikan.adapter.ItemAdapter
 import id.co.personal.pasarikan.models.Item
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -40,8 +34,7 @@ class HomeFragment : Fragment() {
         listItemItem = ArrayList()
         listItemItem.clear()
         getItem()
-        setOnClickButton()
-        pb_list_item.visibility = View.VISIBLE
+        pb_list_item_h.visibility = View.VISIBLE
     }
 
     private fun readUserProfile() {
@@ -62,19 +55,13 @@ class HomeFragment : Fragment() {
         dbRef = database.getReference("items")
         val itemListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                pb_list_item.visibility = View.VISIBLE
-//                val children = dataSnapshot.children
-//                children.forEach {
-//                    val items = it?.getValue<Item>()
-//                    items?.let { it1 -> listItemItem.add(it1) }
-//                    listItemItem.reverse()
-//                }
+                pb_list_item_h.visibility = View.VISIBLE
                 listItemItem.clear()
                 for (postSnapshot in dataSnapshot.children) {
                     val items = postSnapshot?.getValue<Item>()
                     items?.let { it1 -> listItemItem.add(it1) }
                 }
-                pb_list_item.visibility = View.INVISIBLE
+                pb_list_item_h.visibility = View.INVISIBLE
                 showRecyclerList()
             }
             override fun onCancelled(databaseError: DatabaseError) {
@@ -93,14 +80,5 @@ class HomeFragment : Fragment() {
             false
         )
         rv_fish_item.adapter = adapter
-    }
-
-    private fun setOnClickButton(){
-        btn_about.setOnClickListener {
-            startActivity(Intent(activity, EditProfileActivity::class.java))
-        }
-        floatingActionButton.setOnClickListener {
-            startActivity(Intent(activity, ItemInputActivity::class.java))
-        }
     }
 }
