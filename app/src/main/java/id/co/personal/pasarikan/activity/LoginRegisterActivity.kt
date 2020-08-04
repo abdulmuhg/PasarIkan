@@ -44,11 +44,9 @@ class LoginRegisterActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            val i = Intent(this, HomeActivity::class.java)
+            val i = Intent(this, MainActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(i)
-        } else {
-
         }
     }
 

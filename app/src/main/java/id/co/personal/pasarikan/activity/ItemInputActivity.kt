@@ -201,9 +201,7 @@ class ItemInputActivity : BaseActivity() {
         )
         dbRef.child("items").child(item_id).setValue(itemData)
             .addOnSuccessListener {
-                val i = Intent(this, HomeActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(i)
+                finish()
         }
             .addOnFailureListener {
                 val errorDialog =

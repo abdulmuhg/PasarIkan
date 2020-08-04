@@ -66,7 +66,12 @@ class DashboardFragment : Fragment() {
                     items?.let { it1 -> listItemItem.add(it1) }
                 }
                 pb_list_item_d.visibility = View.INVISIBLE
-                showRecyclerList()
+                if (listItemItem.isEmpty()) {
+                    showEmpty()
+                }
+                else {
+                    showRecyclerList()
+                }
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
@@ -74,8 +79,11 @@ class DashboardFragment : Fragment() {
         }
         dbRef.addValueEventListener(itemListener)
     }
-
+    private fun showEmpty(){
+        tv_empty.visibility = View.VISIBLE
+    }
     private fun showRecyclerList(){
+        tv_empty.visibility = View.GONE
         listItemItem.reverse()
         val adapter = ItemAdapter (context!!, listItemItem)
         rv_fish_item_d.layoutManager = LinearLayoutManager(
