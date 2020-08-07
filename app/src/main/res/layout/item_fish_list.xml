@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:padding="16dp">
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="2dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
         android:paddingEnd="16dp"
         android:paddingBottom="16dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +47,7 @@
             android:textColor="?android:attr/textColorSecondary"
             tools:text="Ikan Tuna" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +66,7 @@
             android:theme="@style/RatingBar"
             tools:rating="3" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_stock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
             android:textColor="?android:attr/textColorSecondary"
             tools:text="Stok: 50" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

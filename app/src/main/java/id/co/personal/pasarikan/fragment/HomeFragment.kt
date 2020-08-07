@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -18,9 +19,11 @@ import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import id.co.personal.pasarikan.R
+import id.co.personal.pasarikan.adapter.ItemAdapter
 import id.co.personal.pasarikan.adapter.SliderAdapter
 import id.co.personal.pasarikan.models.Image
 import id.co.personal.pasarikan.models.Item
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -75,8 +78,15 @@ class HomeFragment : Fragment() {
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM) //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
-        sliderView.scrollTimeInSec = 3 //set scroll delay in seconds :
+        sliderView.scrollTimeInSec = 3
         sliderView.startAutoCycle()
+
+        Glide.with(context!!)
+            .load("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2FMale-Fish-Market-Maldives.jpg?alt=media&token=119a70cf-9789-494d-9029-a867a6200981")
+            .into(market_1)
+        Glide.with(context!!)
+            .load("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2F20190226_140138-1.jpg?alt=media&token=4485048a-1cb1-481f-b0e5-3fbfe4def0d2")
+            .into(market_2)
     }
     private fun getUserId(){
         currentUser = auth.currentUser
@@ -97,7 +107,6 @@ class HomeFragment : Fragment() {
         }
         dbRef.child(uid).addListenerForSingleValueEvent(userListener)
     }
-
     private fun getItem(){
         dbRef = database.getReference("items")
         val itemListener = object : ValueEventListener {
@@ -107,12 +116,37 @@ class HomeFragment : Fragment() {
                     val items = postSnapshot?.getValue<Item>()
                     items?.let { it1 -> listItemItem.add(it1) }
                 }
-                //showRecyclerList()
+                showRecyclerList()
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        dbRef.addValueEventListener(itemListener)
+        dbRef.addListenerForSingleValueEvent(itemListener)
+    }
+
+    private fun showRecyclerList(){
+        tv_empty_today.visibility = View.GONE
+        listItemItem.reverse()
+        val topList = listItemItem
+        if (listItemItem.size < 5) {
+            val topList = listItemItem.take(4)
+            val adapter = ItemAdapter (context!!, topList)
+            rv_today_fish.layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            rv_today_fish.adapter = adapter
+        }
+        else {
+            val adapter = ItemAdapter(context!!, topList)
+            rv_today_fish.layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            rv_today_fish.adapter = adapter
+        }
     }
 }

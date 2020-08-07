@@ -18,7 +18,7 @@ import id.co.personal.pasarikan.activity.ItemDetailActivity
 
 class ItemAdapter (
     private val context: Context,
-    private val listItem: ArrayList<Item>
+    private val listItem: List<Item>
 ) : RecyclerView.Adapter<ItemAdapter.FishItemViewHolder>() {
     inner class FishItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemImage: ImageView = view.findViewById(R.id.iv_fish)

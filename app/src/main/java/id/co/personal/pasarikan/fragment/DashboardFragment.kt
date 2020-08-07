@@ -79,9 +79,11 @@ class DashboardFragment : Fragment() {
         }
         dbRef.addValueEventListener(itemListener)
     }
+
     private fun showEmpty(){
         tv_empty.visibility = View.VISIBLE
     }
+
     private fun showRecyclerList(){
         tv_empty.visibility = View.GONE
         listItemItem.reverse()
