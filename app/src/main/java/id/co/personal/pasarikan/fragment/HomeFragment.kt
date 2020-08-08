@@ -1,6 +1,5 @@
 package id.co.personal.pasarikan.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,19 +22,17 @@ import id.co.personal.pasarikan.adapter.ItemAdapter
 import id.co.personal.pasarikan.adapter.SliderAdapter
 import id.co.personal.pasarikan.models.Image
 import id.co.personal.pasarikan.models.Item
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
-
 
 class HomeFragment : Fragment() {
 
     private lateinit var listItemItem: ArrayList<Item>
     private var database: FirebaseDatabase = Firebase.database
-    private lateinit var dbRef: DatabaseReference
+    private var dbRef: DatabaseReference
     private var currentUser: FirebaseUser? = null
     private var uid: String = ""
     private lateinit var auth: FirebaseAuth
-    private lateinit var listImages: ArrayList<Image>
+    private var listImages: ArrayList<Image>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,11 +40,13 @@ class HomeFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
     init {
         dbRef = database.getReference("users")
         listImages = ArrayList()
     }
-    private fun getOnSaleItem(){
+
+    private fun getOnSaleItem() {
         Glide.with(context!!)
             .load("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fsummer_sale.jpg?alt=media&token=c0408a25-e032-4c1e-b146-32407eddd6c9")
             .into(sale_1)
@@ -55,6 +54,7 @@ class HomeFragment : Fragment() {
             .load("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fsuper_sale.jpg?alt=media&token=21e6fd1d-15d8-40b3-98a6-5bde79495020")
             .into(sale_2)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         getUserId()
@@ -63,12 +63,22 @@ class HomeFragment : Fragment() {
         listItemItem.clear()
         getItem()
 
-        //Image Slider
-        val img1 = Image("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_1.jpg?alt=media&token=700fc7f8-b377-4553-aebe-08b315cd7f38",
-        "")
-        val img2= Image("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_2.jpg?alt=media&token=8e5c1ef8-b45d-4e77-8432-d920c1c121c9", "")
-        val img3 = Image("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_3.jpg?alt=media&token=6262fbda-8262-4fdb-88e2-5985ca411adc", "")
-        val img4 = Image("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_4.jpg?alt=media&token=b81eccbd-1c4e-477c-b590-c31c1a6da2d8", "")
+        val img1 = Image(
+            "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_1.jpg?alt=media&token=700fc7f8-b377-4553-aebe-08b315cd7f38",
+            ""
+        )
+        val img2 = Image(
+            "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_2.jpg?alt=media&token=8e5c1ef8-b45d-4e77-8432-d920c1c121c9",
+            ""
+        )
+        val img3 = Image(
+            "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_3.jpg?alt=media&token=6262fbda-8262-4fdb-88e2-5985ca411adc",
+            ""
+        )
+        val img4 = Image(
+            "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_4.jpg?alt=media&token=b81eccbd-1c4e-477c-b590-c31c1a6da2d8",
+            ""
+        )
         listImages.add(img1)
         listImages.add(img2)
         listImages.add(img3)
@@ -88,13 +98,15 @@ class HomeFragment : Fragment() {
             .load("https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2F20190226_140138-1.jpg?alt=media&token=4485048a-1cb1-481f-b0e5-3fbfe4def0d2")
             .into(market_2)
     }
-    private fun getUserId(){
+
+    private fun getUserId() {
         currentUser = auth.currentUser
         currentUser?.let {
             uid = currentUser!!.uid
             readUserProfile(uid)
         }
     }
+
     private fun readUserProfile(uid: String) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -107,7 +119,8 @@ class HomeFragment : Fragment() {
         }
         dbRef.child(uid).addListenerForSingleValueEvent(userListener)
     }
-    private fun getItem(){
+
+    private fun getItem() {
         dbRef = database.getReference("items")
         val itemListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -118,6 +131,7 @@ class HomeFragment : Fragment() {
                 }
                 showRecyclerList()
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
             }
@@ -125,21 +139,20 @@ class HomeFragment : Fragment() {
         dbRef.addListenerForSingleValueEvent(itemListener)
     }
 
-    private fun showRecyclerList(){
+    private fun showRecyclerList() {
         tv_empty_today.visibility = View.GONE
         listItemItem.reverse()
         val topList = listItemItem
-        if (listItemItem.size < 5) {
-            val topList = listItemItem.take(4)
-            val adapter = ItemAdapter (context!!, topList)
+        if (listItemItem.size > 5) {
+            val topLists = listItemItem.subList(0, 5)
+            val adapter = ItemAdapter(context!!, topLists)
             rv_today_fish.layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.VERTICAL,
                 false
             )
             rv_today_fish.adapter = adapter
-        }
-        else {
+        } else {
             val adapter = ItemAdapter(context!!, topList)
             rv_today_fish.layoutManager = LinearLayoutManager(
                 context,

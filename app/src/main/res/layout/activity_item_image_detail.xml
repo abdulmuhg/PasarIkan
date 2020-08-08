@@ -8,12 +8,12 @@
     tools:context=".activity.ItemImageDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/gray900">
+        android:background="@color/gray900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_item_image_detail"
@@ -21,15 +21,6 @@
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp"
             app:navigationIcon="@drawable/ic_round_close_24">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-            </LinearLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -39,9 +30,10 @@
         android:id="@+id/iv_item_image_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/desc_image_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

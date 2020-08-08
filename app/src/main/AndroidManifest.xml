@@ -24,11 +24,16 @@
         tools:replace="android:icon">
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"/>
+            android:label="@string/title_activity_main">
+        </activity>
         <activity android:name=".activity.ItemImageDetailActivity" />
-        <activity android:name=".activity.SplashScreenActivity">
+        <activity android:name=".activity.SplashScreenActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -52,12 +57,10 @@
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="label" />
 
-        <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.ItemDetailActivity" />
         <activity
             android:name=".activity.ItemInputActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.HomeActivity" />
     </application>
 
 </manifest>

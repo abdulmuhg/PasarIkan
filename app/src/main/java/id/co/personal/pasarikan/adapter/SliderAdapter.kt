@@ -1,6 +1,6 @@
 package id.co.personal.pasarikan.adapter
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +11,11 @@ import com.smarteist.autoimageslider.SliderViewAdapter
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.models.Image
 
-
 internal class SliderAdapter(
-    private val listImage: ArrayList<Image>) :
+    private val listImage: ArrayList<Image>
+) :
     SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup): SliderAdapterVH {
         val inflate: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.image_slider_layout_item, null)
@@ -27,9 +28,9 @@ internal class SliderAdapter(
     ) {
         val image = listImage[position]
         viewHolder.textViewDescription.text = image.desc
-        for (img in listImage){
+        for (img in listImage) {
             Glide.with(viewHolder.imageViewBackground)
-            .load(image.source)
+                .load(image.source)
                 .into(viewHolder.imageViewBackground)
         }
     }

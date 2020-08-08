@@ -1,7 +1,6 @@
 package id.co.personal.pasarikan.fragment
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,17 +18,11 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import id.co.personal.pasarikan.MyFunction
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.EditProfileActivity
 import id.co.personal.pasarikan.activity.LoginRegisterActivity
 import id.co.personal.pasarikan.models.User
-import kotlinx.android.synthetic.main.activity_edit_profile.btn_logOut
-import kotlinx.android.synthetic.main.activity_edit_profile.et_email
-import kotlinx.android.synthetic.main.activity_edit_profile.et_ktp
-import kotlinx.android.synthetic.main.activity_edit_profile.et_owner_name
-import kotlinx.android.synthetic.main.activity_edit_profile.et_phone_number
-import kotlinx.android.synthetic.main.activity_edit_profile.et_shop_address
-import kotlinx.android.synthetic.main.activity_edit_profile.iv_profile_picture
 import kotlinx.android.synthetic.main.fragment_account.*
 
 class AccountFragment : Fragment() {
@@ -37,7 +30,6 @@ class AccountFragment : Fragment() {
     private var storageRef: StorageReference
     private var database: FirebaseDatabase = Firebase.database
     private var dbRef: DatabaseReference
-    private var imageUri: Uri? = null
     private var downloadUrl: String? = null
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
@@ -94,11 +86,19 @@ class AccountFragment : Fragment() {
             startActivity(i)
         }
         btn_logOut.setOnClickListener {
-            auth.signOut().also {
-                val i = Intent(context, LoginRegisterActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(i)
+            val confirmDialog =
+                MyFunction.createDialog(context!!, "Anda ingin Logout?", confirmText = "Ya", cancelText = "Batal")
+            confirmDialog.setConfirmClickListener {
+                auth.signOut().also {
+                    val i = Intent(context, LoginRegisterActivity::class.java)
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(i)
+                }
             }
+            confirmDialog.setOnCancelListener {
+                confirmDialog.dismissWithAnimation()
+            }
+            confirmDialog.show()
         }
     }
 }

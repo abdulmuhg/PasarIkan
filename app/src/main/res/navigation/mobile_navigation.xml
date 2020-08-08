@@ -12,8 +12,8 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="id.co.personal.pasarikan.fragment.DashboardFragment"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="id.co.personal.pasarikan.fragment.TokoFragment"
+        tools:layout="@layout/fragment_toko" />
 
     <fragment
         android:id="@+id/navigation_notifications"

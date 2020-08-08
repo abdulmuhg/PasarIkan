@@ -18,10 +18,10 @@
             android:layout_height="match_parent"
             app:contentInsetStartWithNavigation="0dp">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Akun Saya"
+                android:text="@string/title_akun_saya"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="18sp" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Data Toko"
+                android:text="@string/prompt_data_toko"
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="16sp" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:hint="Nama Pemilik"
+                android:hint="@string/prompt_nama_pemilik"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -81,7 +81,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="User"
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +91,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No. KTP"
+                android:hint="@string/prompt_no_ktp"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -100,7 +99,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="1029482718231"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -109,7 +107,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Alamat Toko"
+                android:hint="@string/hint_alamat_toko"
                 android:clickable="false"
                 app:errorEnabled="true">
 
@@ -118,7 +116,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="Jakarta"
                     android:inputType="textImeMultiLine" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -127,7 +124,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="No. HP"
+                android:hint="@string/hint_no_hp"
                 android:clickable="false"
                 app:errorEnabled="true">
 
@@ -136,7 +133,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:text="087823736427"
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -146,14 +142,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:hint="Email">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
                     android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="user@mail.com"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -164,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="Edit Profil"
+                android:text="@string/prompt_edit_profil"
                 android:textAllCaps="false"
                 android:textColor="@color/gray900"
                 app:strokeColor="@color/gray900" />
@@ -175,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="Log Out"
+                android:text="@string/prompt_log_out"
                 android:textAllCaps="false"
                 android:textColor="@android:color/holo_red_dark"
                 app:strokeColor="@android:color/holo_red_dark" />

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.ItemDetailActivity">
+    tools:context=".activity.ItemDetailActivity"
+    tools:ignore="HardcodedText">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -26,11 +27,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/title_item_details"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textSize="18sp"
                     android:textColor="@android:color/primary_text_light" />
 
             </LinearLayout>
@@ -160,7 +161,8 @@
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_verified" />
+                    android:src="@drawable/ic_verified"
+                    android:contentDescription="@string/desc_image_content" />
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView

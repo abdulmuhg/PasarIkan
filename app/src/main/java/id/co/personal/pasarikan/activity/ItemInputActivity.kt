@@ -1,18 +1,3 @@
-/**
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package id.co.personal.pasarikan.activity
 
 import android.annotation.SuppressLint
@@ -23,8 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Patterns
-import android.view.View
 import android.widget.*
 import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -43,7 +26,6 @@ import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.classifier.ImageClassifier
 import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.models.User
-import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_item_input.*
 import java.io.File
 import java.io.IOException
@@ -112,7 +94,7 @@ class ItemInputActivity : BaseActivity() {
         dbRef.child("users").child(uid).addListenerForSingleValueEvent(userListener)
     }
 
-    private fun buttonFunction(){
+    private fun buttonFunction() {
         findViewById<ImageButton>(R.id.photo_camera_button)?.setOnClickListener { takePhoto() }
         findViewById<ImageButton>(R.id.photo_library_button)?.setOnClickListener { chooseFromLibrary() }
         findViewById<Button>(R.id.dummyButton)?.setOnClickListener {
@@ -145,7 +127,7 @@ class ItemInputActivity : BaseActivity() {
         val loadingDialog = MyFunction.createLoadingDialog(this, "Uploading Image", true)
         loadingDialog.show()
         val ref: StorageReference = storageRef.child(
-            "items/"+item.item_id+"/"+System.currentTimeMillis()
+            "items/" + item.item_id + "/" + System.currentTimeMillis()
         )
         val uploadTask = ref.putFile(uri!!)
         uploadTask.continueWithTask { task ->
@@ -202,7 +184,7 @@ class ItemInputActivity : BaseActivity() {
         dbRef.child("items").child(item_id).setValue(itemData)
             .addOnSuccessListener {
                 finish()
-        }
+            }
             .addOnFailureListener {
                 val errorDialog =
                     MyFunction.createErrorDialog(this, contentText = "Failed connect to server")
@@ -210,7 +192,6 @@ class ItemInputActivity : BaseActivity() {
             }
     }
 
-    /** Create a file to pass to camera app */
     @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -227,8 +208,8 @@ class ItemInputActivity : BaseActivity() {
         }
     }
 
-    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) return
         when (requestCode) {
             // Make use of FirebaseVisionImage.fromFilePath to take into account
@@ -251,6 +232,7 @@ class ItemInputActivity : BaseActivity() {
     }
 
     /** Run image classification on the given [Bitmap] */
+    @SuppressLint("SetTextI18n")
     private fun classifyImage(bitmap: Bitmap) {
         if (classifier == null) {
             classText.setText(getString(R.string.uninitialized_img_classifier_or_invalid_context))
@@ -261,16 +243,15 @@ class ItemInputActivity : BaseActivity() {
         imagePreview?.setImageBitmap(bitmap)
 
         // Classify image.
-        classifier?.classifyFrame(bitmap)?.
-            addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    classText.setText("Ikan "+ task.result)
-                } else {
-                    val e = task.exception
-                    Log.e(TAG, "Error classifying frame", e)
-                    classText.setText(e?.message)
-                }
+        classifier?.classifyFrame(bitmap)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                classText.setText("Ikan " + task.result)
+            } else {
+                val e = task.exception
+                Log.e(TAG, "Error classifying frame", e)
+                classText.setText(e?.message)
             }
+        }
     }
 
     private fun chooseFromLibrary() {
@@ -310,14 +291,8 @@ class ItemInputActivity : BaseActivity() {
     }
 
     companion object {
-
-        /** Tag for the [Log].  */
         private const val TAG = "ItemInputActivity"
-
-        /** Request code for starting photo capture activity  */
         private const val REQUEST_IMAGE_CAPTURE = 1
-
-        /** Request code for starting photo library activity  */
         private const val REQUEST_PHOTO_LIBRARY = 2
 
     }

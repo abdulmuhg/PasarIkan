@@ -16,7 +16,7 @@ import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.ItemDetailActivity
 
-class ItemAdapter (
+class ItemAdapter(
     private val context: Context,
     private val listItem: List<Item>
 ) : RecyclerView.Adapter<ItemAdapter.FishItemViewHolder>() {
@@ -43,7 +43,7 @@ class ItemAdapter (
     override fun onBindViewHolder(holder: FishItemViewHolder, position: Int) {
         val item = listItem[position]
         holder.itemName.text = item.name
-        holder.itemPrice.text = "Rp "+ item.price
+        holder.itemPrice.text = "Rp " + item.price
         holder.itemRating.rating = item.rating
         if (item.stock <= 10) {
             holder.itemStock.text = "Stock " + item.stock + " Kg"
@@ -61,6 +61,7 @@ class ItemAdapter (
             context.startActivity(intent)
         }
     }
+
     companion object {
         const val EXTRA_ITEM_ID = "e_i_id"
     }

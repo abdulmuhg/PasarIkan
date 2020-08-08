@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -81,20 +82,24 @@ class EditProfileActivity : AppCompatActivity() {
     private fun buttonFunction() {
         btn_writeData.setOnClickListener {
             val email = et_email.text.toString().trim()
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                et_email.error = "Email tidak valid"
+            if (et_ktp.text!!.isNotBlank() && et_phone_number.text!!.isNotBlank() && et_shop_address.text!!.isNotBlank()) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    et_email.error = "Email tidak valid"
+                } else {
+                    btn_writeData.visibility = View.GONE
+                    progress_write_data.visibility = View.VISIBLE
+                    writeUserData(
+                        uid,
+                        et_owner_name.text.toString(),
+                        et_ktp.text.toString(),
+                        et_shop_address.text.toString(),
+                        et_phone_number.text.toString(),
+                        et_email.text.toString(),
+                        downloadUrl
+                    )
+                }
             } else {
-                btn_writeData.visibility = View.GONE
-                progress_write_data.visibility = View.VISIBLE
-                writeUserData(
-                    uid,
-                    et_owner_name.text.toString(),
-                    et_ktp.text.toString(),
-                    et_shop_address.text.toString(),
-                    et_phone_number.text.toString(),
-                    et_email.text.toString(),
-                    downloadUrl
-                )
+                Toast.makeText(this, "Mohon Lengkapi Form", Toast.LENGTH_SHORT).show()
             }
         }
         toolbar_edit_profil.setNavigationOnClickListener {
@@ -102,13 +107,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
         btn_uploadImage.setOnClickListener {
             openFileChooser()
-        }
-        btn_logOut.setOnClickListener {
-            auth.signOut().also {
-                val i = Intent(this, LoginRegisterActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(i)
-            }
         }
     }
 
@@ -123,7 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
         val loadingDialog = MyFunction.createLoadingDialog(this)
         loadingDialog.show()
         val ref: StorageReference = storageRef.child(
-            "images/profile/"+uid
+            "images/profile/$uid"
         )
         val uploadTask = ref.putFile(uri!!)
         uploadTask.continueWithTask { task ->

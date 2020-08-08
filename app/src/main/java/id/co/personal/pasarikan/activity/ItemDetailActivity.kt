@@ -1,5 +1,6 @@
 package id.co.personal.pasarikan.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -45,6 +46,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     private fun readItemDetail(item_id: String) {
         val userListener = object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val item = dataSnapshot.getValue<Item>()
                 item?.let {
@@ -52,14 +54,14 @@ class ItemDetailActivity : AppCompatActivity() {
                         .load(item.item_images)
                         .into(iv_details_images)
                     imageUrl = item.item_images
-                    tv_price.text = "Rp"+item.price.toString()
+                    tv_price.text = "Rp" + item.price.toString()
                     tv_item_name.text = item.name
-                    tv_stock.text = "Stok "+item.stock.toString() + " Kg"
+                    tv_stock.text = "Stok " + item.stock.toString() + " Kg"
                     tv_rating.text = item.rating.toString()
                     tv_seller_name.text = item.seller_name
                     tv_address.text = item.address
                     tv_desc.text = item.description
-                    if (tv_desc.text.isBlank()){
+                    if (tv_desc.text.isBlank()) {
                         tv_desc.text = "Tidak ada deskripsi"
                     }
                 }
@@ -83,6 +85,7 @@ class ItemDetailActivity : AppCompatActivity() {
             startActivity(i)
         }
     }
+
     companion object {
         const val EXTRA_ITEM_IMAGE_URL = "e_i_i_url"
     }

@@ -9,8 +9,9 @@
         android:id="@+id/iv_auto_image_slider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:src="@tools:sample/backgrounds/scenic"
-        android:scaleType="centerCrop" />
+        android:contentDescription="@string/desc_image_content"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/backgrounds/scenic" />
 
     <FrameLayout
         android:id="@+id/fl_shadow_container"
@@ -26,8 +27,8 @@
             android:layout_marginBottom="16dp"
             android:padding="8dp"
             android:textColor="#FFF"
-            tools:text="Diskon"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="Diskon" />
 
     </FrameLayout>
 

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="ContentDescription"
-    tools:context=".activity.LoginRegisterActivity">
+    tools:context=".activity.LoginRegisterActivity"
+    tools:ignore="ContentDescription">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Pasar Ikan"
+            android:text="@string/app_name"
+            android:textColor="@color/gray900"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <ImageView
@@ -38,46 +38,46 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_email"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
-                android:id="@+id/layout_email"
                 app:startIconDrawable="@drawable/ic_round_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
-                    android:inputType="textEmailAddress"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/fui_password_hint"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="true"
-                android:id="@+id/layout_password"
                 app:startIconDrawable="@drawable/ic_round_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
-                    android:inputType="textPassword"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/btn_signIn"
-                android:text="Log In"
+                android:text="@string/login"
                 android:textAllCaps="false" />
         </LinearLayout>
 
@@ -89,11 +89,11 @@
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_email_reg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:id="@+id/layout_email_reg"
+                android:hint="@string/email"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:startIconDrawable="@drawable/ic_round_person_24">
@@ -101,50 +101,50 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email_reg"
                     android:layout_width="match_parent"
-                    android:inputType="textEmailAddress"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password_reg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/fui_password_hint"
                 app:errorEnabled="true"
-                android:id="@+id/layout_password_reg"
                 app:startIconDrawable="@drawable/ic_round_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_reg"
                     android:layout_width="match_parent"
-                    android:inputType="textPassword"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password_reg_confirm"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password"
-                android:id="@+id/layout_password_reg_confirm"
+                android:hint="@string/confirm_password_hint"
                 app:errorEnabled="true"
                 app:startIconDrawable="@drawable/ic_round_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_reg_confirm"
                     android:layout_width="match_parent"
-                    android:inputType="textPassword"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signUp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Sign Up"
-                android:id="@+id/btn_signUp"
+                android:text="@string/sign_up"
                 android:textAllCaps="false" />
         </LinearLayout>
 
@@ -177,21 +177,21 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have an account? " />
+                android:text="@string/info_don_t_have_an_account" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
             android:id="@+id/text_signIn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Log In"
+            android:text="@string/login"
             android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>

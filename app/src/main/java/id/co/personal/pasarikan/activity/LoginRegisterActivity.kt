@@ -32,6 +32,7 @@ class LoginRegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         onClickEvents()
     }
+
     init {
         dbRef = database.getReference("users")
     }
@@ -49,7 +50,12 @@ class LoginRegisterActivity : AppCompatActivity() {
             startActivity(i)
         }
     }
-
+    override fun onBackPressed() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
     private fun onClickEvents() {
         switch_state.setOnClickListener {
             if (signInState) {
@@ -67,8 +73,9 @@ class LoginRegisterActivity : AppCompatActivity() {
             }
         }
         btn_signIn.setOnClickListener {
-            if (et_email.text.isNullOrBlank() || et_password.text.isNullOrBlank()){
-                val warningDialog = createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
+            if (et_email.text.isNullOrBlank() || et_password.text.isNullOrBlank()) {
+                val warningDialog =
+                    createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
                 warningDialog.show()
             } else {
                 signIn(et_email.text.toString(), et_password.text.toString())
@@ -76,8 +83,9 @@ class LoginRegisterActivity : AppCompatActivity() {
         }
         btn_signUp.setOnClickListener {
             val email = et_email_reg.text.toString().trim()
-            if (et_email_reg.text.isNullOrBlank() || et_password_reg.text.isNullOrBlank() || et_password_reg_confirm.text.isNullOrBlank()){
-                val warningDialog = createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
+            if (et_email_reg.text.isNullOrBlank() || et_password_reg.text.isNullOrBlank() || et_password_reg_confirm.text.isNullOrBlank()) {
+                val warningDialog =
+                    createWarningDialog(this, "Perhatian", "Email dan Password tidak boleh kosong!")
                 warningDialog.show()
             } else {
                 if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -187,20 +195,21 @@ class LoginRegisterActivity : AppCompatActivity() {
         dbRef.child(uid).setValue(userData)
             .addOnSuccessListener {
 
-        }
+            }
             .addOnFailureListener {
 
             }
     }
 
-    private fun getDisplayName(displayName: String): String{
+    private fun getDisplayName(displayName: String): String {
         val startIndex = displayName.indexOf("@")
         val lastIndex = displayName.lastIndex
-        return displayName.removeRange(startIndex, lastIndex+1)
+        return displayName.removeRange(startIndex, lastIndex + 1)
     }
 
     companion object {
         private const val TAG = "EmailPassword"
-        private const val DEFAULT_PROFILE_IMAGE = "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/default%2Fdefault_profile_picture.png?alt=media&token=1c1f2e09-7ba2-4c2d-aed9-2055c6fa9114"
+        private const val DEFAULT_PROFILE_IMAGE =
+            "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/default%2Fdefault_profile_picture.png?alt=media&token=1c1f2e09-7ba2-4c2d-aed9-2055c6fa9114"
     }
 }
