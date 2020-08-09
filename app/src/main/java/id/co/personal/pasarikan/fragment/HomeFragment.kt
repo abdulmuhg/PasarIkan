@@ -1,5 +1,6 @@
 package id.co.personal.pasarikan.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import id.co.personal.pasarikan.R
+import id.co.personal.pasarikan.activity.ItemShowAllActivity
 import id.co.personal.pasarikan.adapter.ItemAdapter
 import id.co.personal.pasarikan.adapter.SliderAdapter
 import id.co.personal.pasarikan.models.Image
@@ -62,6 +64,7 @@ class HomeFragment : Fragment() {
         listItemItem = ArrayList()
         listItemItem.clear()
         getItem()
+        onClickEvents()
 
         val img1 = Image(
             "https://firebasestorage.googleapis.com/v0/b/pasar-ikan.appspot.com/o/sample_images%2Fdisc_1.jpg?alt=media&token=700fc7f8-b377-4553-aebe-08b315cd7f38",
@@ -160,6 +163,20 @@ class HomeFragment : Fragment() {
                 false
             )
             rv_today_fish.adapter = adapter
+        }
+    }
+
+    private fun onClickEvents(){
+        btn_t_show_all.setOnClickListener {
+            val intent = Intent(context, ItemShowAllActivity::class.java)
+            intent.putExtra("extra", "all")
+            startActivity(intent)
+        }
+        btn_pangandaran.setOnClickListener {
+            val intent = Intent(context, ItemShowAllActivity::class.java)
+            intent.putExtra("extra", "loc")
+            intent.putExtra("request", "Pangandaran")
+            startActivity(intent)
         }
     }
 }

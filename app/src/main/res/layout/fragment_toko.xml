@@ -240,6 +240,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:text="@string/btn_text_lihat_semua"
+                            android:id="@+id/btn_t_show_all_owner"
                             android:textColor="@android:color/black"
                             android:textStyle="bold" />
                     </LinearLayout>

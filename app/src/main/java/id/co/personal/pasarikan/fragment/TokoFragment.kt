@@ -20,10 +20,12 @@ import com.google.firebase.ktx.Firebase
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.EditProfileActivity
 import id.co.personal.pasarikan.activity.ItemInputActivity
+import id.co.personal.pasarikan.activity.ItemShowAllActivity
 import id.co.personal.pasarikan.adapter.ItemAdapter
 import id.co.personal.pasarikan.adapter.ItemOwnerAdapter
 import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.models.User
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_toko.*
 
 class TokoFragment : Fragment() {
@@ -123,13 +125,25 @@ class TokoFragment : Fragment() {
     private fun showRecyclerList() {
         tv_empty?.visibility = View.GONE
         listItemItem.reverse()
-        val adapter = ItemOwnerAdapter(context!!, listItemItem)
-        rv_fish_item_d?.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        rv_fish_item_d?.adapter = adapter
+        val topList = listItemItem
+        if (listItemItem.size > 5) {
+            val topLists = listItemItem.subList(0, 5)
+            val adapter = context?.let { ItemOwnerAdapter(it, topLists) }
+            rv_fish_item_d?.layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            rv_fish_item_d?.adapter = adapter
+        } else {
+            val adapter = ItemOwnerAdapter(context!!, topList)
+            rv_fish_item_d?.layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            rv_fish_item_d?.adapter = adapter
+        }
     }
 
     private fun onClickButton() {
@@ -138,6 +152,11 @@ class TokoFragment : Fragment() {
         }
         btn_empty_user_data?.setOnClickListener {
             startActivity(Intent(context, EditProfileActivity::class.java))
+        }
+        btn_t_show_all_owner.setOnClickListener {
+            val intent = Intent(context, ItemShowAllActivity::class.java)
+            intent.putExtra("extra", "owner")
+            startActivity(intent)
         }
     }
 }

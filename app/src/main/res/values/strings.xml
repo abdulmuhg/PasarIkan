@@ -65,4 +65,6 @@
     <string name="info_empty_list">Anda belum memiliki barang yang dijual</string>
     <string name="prompt_tambah_produk">Tambah Produk</string>
     <string name="prompt_edit">Edit</string>
+    <string name="prompt_ikan_segar">Ikan Segar</string>
+    <string name="prompt_semua_barang">Semua Barang</string>
 </resources>

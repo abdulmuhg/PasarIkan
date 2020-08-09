@@ -127,6 +127,7 @@
                             android:text="@string/pasar_ikan_pangandaran"
                             android:textAllCaps="false"
                             android:textSize="14sp"
+                            android:id="@+id/btn_pangandaran"
                             app:backgroundTint="#FFFFFF" />
                     </com.google.android.material.card.MaterialCardView>
 
@@ -172,10 +173,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/ikan_hari_ini"
+                    android:text="@string/prompt_ikan_segar"
                     android:textColor="@color/gray900" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/btn_t_show_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
