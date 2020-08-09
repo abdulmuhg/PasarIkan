@@ -149,6 +149,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:gravity="center_vertical"
                                     android:drawableStart="@drawable/ic_check"
                                     android:drawablePadding="8dp"
                                     android:text="@string/prompt_terjual" />
@@ -157,6 +158,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:gravity="center_vertical"
                                     android:drawableStart="@drawable/ic_remove"
                                     android:drawablePadding="8dp"
                                     android:text="@string/prompt_transaksi_gagal" />
@@ -253,6 +255,7 @@
                         app:layout_constraintTop_toBottomOf="@id/container_text"
                         app:layout_constraintVertical_bias="0.0"
                         tools:itemCount="3"
+                        android:overScrollMode="never"
                         tools:listitem="@layout/item_fish_list" />
 
                     <ProgressBar

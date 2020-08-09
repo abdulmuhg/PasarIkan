@@ -63,22 +63,24 @@ class TokoFragment : Fragment() {
                 val user = dataSnapshot.getValue<User>()
                 user?.apply {
                     if (user.noKTP == "" || user.phoneNumber == "") {
-                        container_lengkapi_data.visibility = View.VISIBLE
-                        main_container.visibility = View.GONE
-                        tv_empty.visibility = View.GONE
-                        btn_addItem.isClickable = false
-                        btn_addItem.visibility = View.GONE
+                        container_lengkapi_data?.visibility = View.VISIBLE
+                        main_container?.visibility = View.GONE
+                        tv_empty?.visibility = View.GONE
+                        btn_addItem?.isClickable = false
+                        btn_addItem?.visibility = View.GONE
                     } else {
                         container_lengkapi_data?.visibility = View.GONE
-                        main_container.visibility = View.VISIBLE
-                        btn_addItem.isClickable = true
-                        btn_addItem.visibility = View.VISIBLE
+                        main_container?.visibility = View.VISIBLE
+                        btn_addItem?.isClickable = true
+                        btn_addItem?.visibility = View.VISIBLE
                     }
-                    tv_username.text = "Halo, " + user.ownerName
-                    Glide.with(context!!)
-                        .load(user.imageUrl)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(iv_profile_picture)
+                    tv_username?.text = "Halo, " + user.ownerName
+                    context?.let {
+                        Glide.with(it)
+                            .load(user.imageUrl)
+                            .apply(RequestOptions.circleCropTransform())
+                            .into(iv_profile_picture)
+                    }
                 }
             }
 
