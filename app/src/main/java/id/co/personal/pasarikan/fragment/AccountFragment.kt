@@ -88,17 +88,18 @@ class AccountFragment : Fragment() {
         btn_logOut.setOnClickListener {
             val confirmDialog =
                 MyFunction.createDialog(context!!, "Konfirmasi", contentText = "Anda yakin ingin Log Out?",  confirmText = "Ya", cancelText = "Batal")
+            confirmDialog.show()
             confirmDialog.setConfirmClickListener {
                 auth.signOut().also {
                     val i = Intent(context, LoginRegisterActivity::class.java)
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    confirmDialog.dismissWithAnimation()
                     startActivity(i)
                 }
             }
             confirmDialog.setOnCancelListener {
                 confirmDialog.dismissWithAnimation()
             }
-            confirmDialog.show()
         }
     }
 }

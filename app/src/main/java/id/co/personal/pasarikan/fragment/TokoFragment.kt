@@ -21,6 +21,7 @@ import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.EditProfileActivity
 import id.co.personal.pasarikan.activity.ItemInputActivity
 import id.co.personal.pasarikan.adapter.ItemAdapter
+import id.co.personal.pasarikan.adapter.ItemOwnerAdapter
 import id.co.personal.pasarikan.models.Item
 import id.co.personal.pasarikan.models.User
 import kotlinx.android.synthetic.main.fragment_toko.*
@@ -95,7 +96,7 @@ class TokoFragment : Fragment() {
         dbRef = database.getReference("items")
         val itemListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                pb_list_item_d.visibility = View.VISIBLE
+                pb_list_item_d?.visibility = View.VISIBLE
                 listItemItem.clear()
                 for (postSnapshot in dataSnapshot.children) {
                     val items = postSnapshot?.getValue<Item>()
@@ -103,11 +104,11 @@ class TokoFragment : Fragment() {
                         items.let { it1 -> listItemItem.add(it1) }
                     }
                 }
-                pb_list_item_d.visibility = View.INVISIBLE
+                pb_list_item_d?.visibility = View.INVISIBLE
                 if (listItemItem.isEmpty()) {
                     //showEmpty()
                 } else {
-                    tv_empty.visibility = View.GONE
+                    tv_empty?.visibility = View.GONE
                     showRecyclerList()
                 }
             }
@@ -120,19 +121,19 @@ class TokoFragment : Fragment() {
     }
 
     private fun showRecyclerList() {
-        tv_empty.visibility = View.GONE
+        tv_empty?.visibility = View.GONE
         listItemItem.reverse()
-        val adapter = ItemAdapter(context!!, listItemItem)
-        rv_fish_item_d.layoutManager = LinearLayoutManager(
+        val adapter = ItemOwnerAdapter(context!!, listItemItem)
+        rv_fish_item_d?.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
             false
         )
-        rv_fish_item_d.adapter = adapter
+        rv_fish_item_d?.adapter = adapter
     }
 
     private fun onClickButton() {
-        btn_addItem.setOnClickListener {
+        btn_addItem?.setOnClickListener {
             startActivity(Intent(context, ItemInputActivity::class.java))
         }
         btn_empty_user_data?.setOnClickListener {
