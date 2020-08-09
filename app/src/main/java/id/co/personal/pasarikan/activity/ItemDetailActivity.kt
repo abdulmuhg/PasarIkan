@@ -1,7 +1,9 @@
 package id.co.personal.pasarikan.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +34,16 @@ class ItemDetailActivity : AppCompatActivity() {
     init {
         dbRef = database.getReference("items")
     }
-
+    private fun Context.makePhoneCall(number: String) : Boolean {
+        return try {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+            startActivity(intent)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
     fun getRupiah(price: Int) {
         val localeID = Locale("in", "ID")
         val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
@@ -83,6 +94,9 @@ class ItemDetailActivity : AppCompatActivity() {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             i.putExtra(EXTRA_ITEM_IMAGE_URL, imageUrl)
             startActivity(i)
+        }
+        btn_call.setOnClickListener {
+            makePhoneCall("087823736421")
         }
     }
 

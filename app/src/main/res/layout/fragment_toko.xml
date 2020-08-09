@@ -296,6 +296,7 @@
         android:backgroundTint="@color/primaryColor"
         android:drawableLeft="@drawable/ic_round_add_24"
         android:text="@string/prompt_tambah_produk"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         tools:ignore="RtlHardcoded" />
 </RelativeLayout>
