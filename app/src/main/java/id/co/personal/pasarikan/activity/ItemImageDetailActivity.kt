@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.bumptech.glide.Glide
 import id.co.personal.pasarikan.R
 import id.co.personal.pasarikan.activity.ItemDetailActivity.Companion.EXTRA_ITEM_IMAGE_URL
-import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.activity_item_image_detail.*
 
 class ItemImageDetailActivity : AppCompatActivity() {
@@ -20,7 +19,7 @@ class ItemImageDetailActivity : AppCompatActivity() {
             .into(iv_item_image_detail)
     }
 
-    private fun onClickEvents(){
+    private fun onClickEvents() {
         toolbar_item_image_detail.setNavigationOnClickListener {
             finish()
         }

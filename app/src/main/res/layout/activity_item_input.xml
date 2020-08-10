@@ -69,10 +69,10 @@
                 android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_margin="16dp"
                 android:foregroundGravity="center"
                 android:src="@drawable/ic_photo_library"
-                android:layout_margin="16dp"
-                app:backgroundTint="@android:color/transparent"/>
+                app:backgroundTint="@android:color/transparent" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -95,10 +95,11 @@
             android:id="@+id/result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints="Ikan"
             android:inputType="text"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            tools:text="Ikan Tuna"
-            android:autofillHints="Ikan" />
+            tools:ignore="LabelFor"
+            tools:text="Ikan Tuna" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -127,7 +128,8 @@
                 android:hint="@string/hint_10000"
                 android:inputType="number"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                tools:text="" />
+                tools:text=""
+                android:importantForAutofill="no" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -12,14 +12,17 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import id.co.personal.pasarikan.models.Item
+import com.google.android.material.button.MaterialButton
 import id.co.personal.pasarikan.R
+import id.co.personal.pasarikan.activity.EditItemActivity
 import id.co.personal.pasarikan.activity.ItemDetailActivity
+import id.co.personal.pasarikan.models.Item
 
-class ItemAdapter(
+
+class ItemOwnerAdapter(
     private val context: Context,
     private val listItem: List<Item>
-) : RecyclerView.Adapter<ItemAdapter.FishItemViewHolder>() {
+) : RecyclerView.Adapter<ItemOwnerAdapter.FishItemViewHolder>() {
     inner class FishItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemImage: ImageView = view.findViewById(R.id.iv_fish)
         val itemName: TextView = view.findViewById(R.id.tv_name)
@@ -27,19 +30,20 @@ class ItemAdapter(
         val itemStock: TextView = view.findViewById(R.id.tv_stock)
         val itemCity: TextView = view.findViewById(R.id.tv_city)
         val itemRating: RatingBar = view.findViewById(R.id.rating_seller)
+        val btnEdit: MaterialButton = view.findViewById(R.id.btn_edit)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FishItemViewHolder {
         return FishItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_fish_list, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_list_owner, parent, false)
         )
     }
-
     override fun getItemCount(): Int {
         return listItem.size
     }
+    companion object {
+        const val EXTRA_ITEM_ID = "e_i_id"
+    }
 
-    @SuppressLint("SetTextI18n", "ResourceAsColor")
     override fun onBindViewHolder(holder: FishItemViewHolder, position: Int) {
         val item = listItem[position]
         holder.itemName.text = item.name
@@ -60,9 +64,10 @@ class ItemAdapter(
             intent.putExtra(EXTRA_ITEM_ID, item.item_id)
             context.startActivity(intent)
         }
-    }
-
-    companion object {
-        const val EXTRA_ITEM_ID = "e_i_id"
+        holder.btnEdit.setOnClickListener {
+            val intent = Intent(context, EditItemActivity::class.java)
+            intent.putExtra(EXTRA_ITEM_ID, item.item_id)
+            context.startActivity(intent)
+        }
     }
 }

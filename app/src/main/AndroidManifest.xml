@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -22,17 +23,27 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup"
         tools:replace="android:icon">
-        <activity android:name=".activity.ItemImageDetailActivity"></activity>
-        <activity android:name=".activity.SplashScreenActivity">
+        <activity android:name=".activity.ItemShowAllActivity"/>
+        <activity android:name=".activity.EditItemActivity"/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_main"/>
+        <activity android:name=".activity.ItemImageDetailActivity" />
+        <activity
+            android:name=".activity.SplashScreenActivity"
+            android:theme="@style/AppTheme.SplashScreen"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginRegisterActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <activity android:name=".activity.EditProfileActivity" />
 
         <provider
@@ -49,15 +60,10 @@
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="label" />
 
-        <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.ItemDetailActivity" />
-        <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ItemInputActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.HomeActivity" />
     </application>
 
 </manifest>

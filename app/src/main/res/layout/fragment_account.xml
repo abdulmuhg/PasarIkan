@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="ContentDescription">
+    tools:context=".fragment.AccountFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -13,44 +14,17 @@
         android:background="@android:color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_edit_profil"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@drawable/ic_round_close_24">
+            app:contentInsetStartWithNavigation="0dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_akun_saya"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/edit_profil_title"
-                    android:textColor="@android:color/primary_text_light"
-                    android:textSize="18sp" />
-
-                <ImageButton
-                    android:id="@+id/btn_writeData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end|center"
-                    android:background="@android:color/transparent"
-                    android:padding="16dp"
-                    android:src="@drawable/ic_round_check_24"
-                    android:tint="@color/primaryColor" />
-
-                <ProgressBar
-                    android:id="@+id/progress_write_data"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="16dp"
-                    android:visibility="gone" />
-
-            </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -81,17 +55,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    android:src="@color/gray300"/>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_uploadImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_round_photo_camera_24"
-                    app:backgroundTint="#FFFFFF"
-                    app:fabSize="mini"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,6 +72,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:hint="@string/prompt_nama_pemilik"
                 app:errorEnabled="true">
 
@@ -114,12 +80,14 @@
                     android:id="@+id/et_owner_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords" />
+                    android:enabled="false"
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ktpLayout"
+                android:clickable="false"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,6 +98,7 @@
                     android:id="@+id/et_ktp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -139,12 +108,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_alamat_toko"
+                android:clickable="false"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_shop_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:inputType="textImeMultiLine" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -154,12 +125,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_no_hp"
+                android:clickable="false"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -168,16 +141,39 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_goto_edit_profile"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/prompt_edit_profil"
+                android:textAllCaps="false"
+                android:textColor="@color/gray900"
+                app:strokeColor="@color/gray900" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logOut"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/prompt_log_out"
+                android:textAllCaps="false"
+                android:textColor="@android:color/holo_red_dark"
+                app:strokeColor="@android:color/holo_red_dark" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

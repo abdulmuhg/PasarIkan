@@ -38,14 +38,10 @@ import com.google.firebase.ml.vision.label.FirebaseVisionOnDeviceAutoMLImageLabe
 import java.io.IOException
 import java.lang.Long
 import java.util.Locale
-
-/** Classifies images with ML Kit AutoML.  */
 class ImageClassifier
-/** Initializes an `ImageClassifier`.  */
 @Throws(FirebaseMLException::class)
 internal constructor(context: Context) {
 
-    /** MLKit AutoML Image Classifier  */
     private var labeler: FirebaseVisionImageLabeler? = null
     private var remoteModelDownloadSucceeded = false
 
