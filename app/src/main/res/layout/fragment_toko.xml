@@ -45,34 +45,6 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/container_lengkapi_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_empty_user_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/info_not_complete_identity" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_empty_user_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/prompt_lengkapi_sekarang"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -299,4 +271,34 @@
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         tools:ignore="RtlHardcoded" />
+
+    <LinearLayout
+        android:id="@+id/container_lengkapi_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_empty_user_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/info_not_complete_identity" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_empty_user_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primaryColor"
+            android:text="@string/prompt_lengkapi_sekarang"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </RelativeLayout>

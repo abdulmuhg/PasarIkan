@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -69,12 +70,10 @@ class TokoFragment : Fragment() {
                         container_lengkapi_data?.visibility = View.VISIBLE
                         main_container?.visibility = View.GONE
                         tv_empty?.visibility = View.GONE
-                        btn_addItem?.isClickable = false
                         btn_addItem?.visibility = View.GONE
                     } else {
                         container_lengkapi_data?.visibility = View.GONE
                         main_container?.visibility = View.VISIBLE
-                        btn_addItem?.isClickable = true
                         btn_addItem?.visibility = View.VISIBLE
                     }
                     tv_username?.text = "Halo, " + user.ownerName
