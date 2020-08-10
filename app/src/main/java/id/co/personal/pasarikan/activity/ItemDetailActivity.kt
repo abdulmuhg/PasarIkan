@@ -19,11 +19,12 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
 import java.text.NumberFormat
 import java.util.*
 
-class ItemDetailActivity : AppCompatActivity() {
+class ItemDetailActivity : BaseActivity() {
     private var itemId: String? = null
     private var database: FirebaseDatabase = Firebase.database
     private var dbRef: DatabaseReference
     private var imageUrl: String? = null
+    private var contact: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
@@ -72,6 +73,7 @@ class ItemDetailActivity : AppCompatActivity() {
                     tv_seller_name.text = item.seller_name
                     tv_address.text = item.address
                     tv_desc.text = item.description
+                    contact = item.contact
                     if (tv_desc.text.isBlank()) {
                         tv_desc.text = "Tidak ada deskripsi"
                     }
@@ -96,7 +98,7 @@ class ItemDetailActivity : AppCompatActivity() {
             startActivity(i)
         }
         btn_call.setOnClickListener {
-            makePhoneCall("087823736421")
+            makePhoneCall(contact)
         }
     }
 

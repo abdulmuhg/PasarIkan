@@ -48,6 +48,7 @@ class ItemInputActivity : BaseActivity() {
     private var item = Item()
     private var itemImageUrl: String? = null
     private var imageUri: Uri? = null
+    private var contact: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_input)
@@ -85,6 +86,7 @@ class ItemInputActivity : BaseActivity() {
                 item.user_id = user!!.userId
                 item.address = user.address
                 item.seller_name = user.ownerName
+                contact = user.phoneNumber
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -179,7 +181,8 @@ class ItemInputActivity : BaseActivity() {
             price = price,
             address = address,
             item_images = images,
-            seller_name = sellerName
+            seller_name = sellerName,
+            contact = contact
         )
         dbRef.child("items").child(item_id).setValue(itemData)
             .addOnSuccessListener {

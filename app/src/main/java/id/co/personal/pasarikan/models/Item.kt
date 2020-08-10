@@ -11,5 +11,6 @@ class Item(
     var address: String = "",
     var min_buy: Int = 1,
     var item_images: String = "",
-    var seller_name: String = ""
+    var seller_name: String = "",
+    var contact: String = ""
 )

@@ -178,5 +178,11 @@ class HomeFragment : Fragment() {
             intent.putExtra("request", "Pangandaran")
             startActivity(intent)
         }
+        btn_cirebon.setOnClickListener {
+            val intent = Intent(context, ItemShowAllActivity::class.java)
+            intent.putExtra("extra", "loc")
+            intent.putExtra("request", "Cirebon")
+            startActivity(intent)
+        }
     }
 }

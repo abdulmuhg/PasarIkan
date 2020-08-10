@@ -67,4 +67,5 @@
     <string name="prompt_edit">Edit</string>
     <string name="prompt_ikan_segar">Ikan Segar</string>
     <string name="prompt_semua_barang">Semua Barang</string>
+    <string name="hint_city">Kota/ Kabupaten</string>
 </resources>
