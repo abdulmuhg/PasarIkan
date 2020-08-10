@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -183,6 +184,16 @@ class HomeFragment : Fragment() {
             intent.putExtra("extra", "loc")
             intent.putExtra("request", "Cirebon")
             startActivity(intent)
+        }
+        btn_search.setOnClickListener {
+            if (et_search.text.isNotBlank()){
+                val intent = Intent(context, ItemShowAllActivity::class.java)
+                intent.putExtra("extra", "search")
+                intent.putExtra("request", et_search.text.toString())
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "Mohon masukkan kata", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

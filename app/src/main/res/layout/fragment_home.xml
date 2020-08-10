@@ -22,17 +22,26 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <SearchView
-                    android:id="@+id/sv_home"
-                    style="@android:style/Widget.Material.SearchView"
+                <EditText
+                    android:id="@+id/et_search"
                     android:layout_width="0dp"
+                    android:background="@drawable/bg_search_et"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="4dp"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapWords"
+                    android:hint="@string/hint_cari_ikan"
+                    android:paddingHorizontal="8dp"
                     android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:layoutDirection="rtl"
-                    android:queryHint="Ikan Tuna" />
-
+                    android:importantForAutofill="no" />
+                <ImageButton
+                    android:id="@+id/btn_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/desc_icon_notification"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:tint="@color/gray700" />
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

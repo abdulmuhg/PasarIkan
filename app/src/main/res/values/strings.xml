@@ -68,4 +68,6 @@
     <string name="prompt_ikan_segar">Ikan Segar</string>
     <string name="prompt_semua_barang">Semua Barang</string>
     <string name="hint_city">Kota/ Kabupaten</string>
+    <string name="hint_cari_ikan">Cari Ikan</string>
+    <string name="text_sorry">Maaf, barang tidak ditemukan</string>
 </resources>

@@ -1,5 +1,6 @@
 package id.co.personal.pasarikan.activity
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,7 @@ class ItemShowAllActivity : AppCompatActivity() {
         listItemItem = ArrayList()
         listItemItem.clear()
         onClickEvents()
+        container_showEmpty.visibility = View.GONE
     }
     init {
         dbRef = database.getReference("users")
@@ -55,6 +57,10 @@ class ItemShowAllActivity : AppCompatActivity() {
             }
             "owner" -> {
                 getItemOwner()
+            }
+            "search" -> {
+                val keyword = intent?.getStringExtra("request").toString()
+                getSearchResult(keyword)
             }
         }
     }
@@ -97,7 +103,7 @@ class ItemShowAllActivity : AppCompatActivity() {
                     }
                 }
                 if (listItemItem.isEmpty()) {
-                    //showEmpty()
+                    showEmpty()
                 } else {
                     showRecyclerListOwner()
                 }
@@ -122,7 +128,7 @@ class ItemShowAllActivity : AppCompatActivity() {
                     }
                 }
                 if (listItemItem.isEmpty()) {
-                    //showEmpty()
+                    showEmpty()
                 } else {
                     showRecyclerList()
                 }
@@ -133,6 +139,50 @@ class ItemShowAllActivity : AppCompatActivity() {
             }
         }
         dbRef.addValueEventListener(itemListener)
+    }
+
+    private fun getSearchResult(key: String?) {
+        dbRef = database.getReference("items")
+        val itemListener = object : ValueEventListener {
+            @SuppressLint("DefaultLocale")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                listItemItem.clear()
+                for (postSnapshot in dataSnapshot.children) {
+                    val items = postSnapshot?.getValue<Item>()
+                    if (
+                        items!!.name.contains(key.toString())||
+                            items.name.contains(key?.capitalize().toString())||
+                            items.name.contains(key?.decapitalize().toString())||
+                            items.name.contains(key?.toLowerCase().toString())||
+                            items.seller_name.contains(key?.capitalize().toString())||
+                            items.seller_name.contains(key?.decapitalize().toString())||
+                            items.seller_name.contains(key?.toLowerCase().toString())||
+                            items.description.contains(key?.capitalize().toString())||
+                            items.description.contains(key?.decapitalize().toString())||
+                            items.description.contains(key?.toLowerCase().toString())||
+                            items.address.contains(key?.capitalize().toString())||
+                            items.address.contains(key?.decapitalize().toString())||
+                            items.address.contains(key?.toLowerCase().toString())
+                            ) {
+                        items.let { it1 -> listItemItem.add(it1) }
+                    }
+                }
+                if (listItemItem.isEmpty()) {
+                    showEmpty()
+                } else {
+                    showRecyclerList()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("DataChange", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        dbRef.addValueEventListener(itemListener)
+    }
+
+    private fun showEmpty(){
+        container_showEmpty?.visibility = View.VISIBLE
     }
 
     private fun showRecyclerList() {
